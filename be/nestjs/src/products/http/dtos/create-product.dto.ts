@@ -1,11 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
+  ValidateNested,
 } from 'class-validator';
+import { MobileSystemDto } from 'src/mobile-systems/http/dtos/mobile-system.dto';
 
 export class CreateProductDto {
   @ApiProperty()
@@ -13,7 +17,7 @@ export class CreateProductDto {
   @IsString()
   name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   slug: string;
 
@@ -23,6 +27,11 @@ export class CreateProductDto {
   categoryId: string;
 
   @ApiProperty()
+  @IsString()
+  @IsOptional()
+  mobileSystemId: string;
+
+  @ApiProperty()
   @IsNotEmpty()
   @IsOptional()
   authId?: string;
@@ -30,6 +39,7 @@ export class CreateProductDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
+  @Transform(({ value }) => parseFloat(value))
   price: number;
 
   @ApiProperty()
@@ -73,8 +83,21 @@ export class CreateProductDto {
   keywordSeo?: string;
 
   @IsString()
+  @IsOptional()
   image: string;
 
   @IsString()
+  @IsOptional()
   imageUrl: string;
+
+  @ApiProperty({ type: String })
+  @IsUUID()
+  @IsNotEmpty()
+  brandId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => MobileSystemDto)
+  mobileSystem: MobileSystemDto;
 }

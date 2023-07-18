@@ -20,7 +20,7 @@ import { UpdateProductDto } from '../dtos/update-product.dto';
 import { ProductService } from 'src/products/services/product.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-@ApiTags('Products')
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
@@ -42,6 +42,59 @@ export class ProductController {
   })
   async getById(@Param('id') id: string): Promise<ProductEntity> {
     return this.productService.findById(id);
+  }
+
+  @Get(':id/category/:categoryId')
+  @ApiOperation({
+    summary: 'Get Related Products',
+    description: 'Get Related Products',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id of Product',
+  })
+  @ApiParam({
+    name: 'categoryId',
+    description: 'Id of Category',
+  })
+  async getRelatedProducts(
+    @Param('id') id: string,
+    @Param('categoryId') categoryId: string,
+  ): Promise<ProductEntity[]> {
+    return this.productService.findRelatedProducts(id, categoryId);
+  }
+
+  @Get('slug/:slugName')
+  @ApiOperation({
+    summary: 'Get product by slug',
+    description: 'Get product by slug',
+  })
+  @ApiParam({
+    name: 'slug',
+    description: 'Slug of Product',
+  })
+  async getBySlug(@Param('slugName') slug: string): Promise<ProductEntity> {
+    return this.productService.findBySlug(slug);
+  }
+
+  @Get(':id/slug/:slugName')
+  @ApiOperation({
+    summary: 'Get product by id and slug',
+    description: 'Get product by id and slug',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id of Product',
+  })
+  @ApiParam({
+    name: 'slug',
+    description: 'Slug of Product',
+  })
+  async getByIdSlug(
+    @Param('id') id: string,
+    @Param('slug') slug: string,
+  ): Promise<ProductEntity> {
+    return this.productService.findByIdAndSlug(id, slug);
   }
 
   @Post()

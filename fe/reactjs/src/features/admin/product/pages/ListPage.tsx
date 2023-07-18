@@ -14,6 +14,7 @@ import { productApi } from "../../../../api/productApi";
 import { Product } from "../../../../models";
 import { ProductTable } from "../components/ProductTable";
 import { ProductFilter } from "../components/ProductFilter";
+import { Helmet } from "../../../../components/Helmet/Helmet";
 
 
 export function ListPage() {
@@ -35,6 +36,13 @@ export function ListPage() {
     dispatch(productActions.setFilterWithDebounce(newFilter));
   }
 
+  const handlePageChange = (e: any, page: number) => {
+    dispatch(productActions.setFilter({
+      ...filter,
+      page: page
+    }))
+  }
+
   const handleRemoveProduct = async(product: Product) => {
     try {
       await productApi.delete(product?.id || '')
@@ -50,12 +58,14 @@ export function ListPage() {
   }
 
   return (
-    <>
+    <>        
+    <Helmet title="Sản phẩm">
       <div className="product__list-wrapper w-full h-full flex flex-col justify-between">
         <ListPageHeader
           title="Sản phẩm"
           btnContent="+ Thêm sản phẩm"
           linkButton="add"
+          showBtn={true}
         />
         <div className="product__list-center w-full p-5 h-[90%]">
           <div className="product__list-main shadow-md p-3 z-10">
@@ -67,12 +77,14 @@ export function ListPage() {
                 page={pagination.currentPage}
                 variant="outlined"
                 shape="rounded"
+                onChange={handlePageChange} 
               />
             </Box>
           </div>
         </div>
         {/* <div className="category__list-bottom border-t h-[10%]">footer</div> */}
       </div>
+    </Helmet>
     </>
   );
 }

@@ -7,10 +7,13 @@ const sideBarMenu = [
   { name: "Tổng quan", hef: "/admin/dashboard", icon: "ri-bar-chart-fill" },
   { name: "Danh mục", hef: "/admin/categories", icon: "ri-list-check" },
   { name: "Sản phẩm", hef: "/admin/products", icon: "ri-store-fill" },
+  { name: "Tài khoản", hef: "/admin/users", icon: "ri-team-fill" },
+  { name: "Đơn hàng", hef: "/admin/transactions", icon: "ri-shopping-cart-fill" },
+
 ];
 
 const sideBarBottomMenu = [
-  { name: "Tài khoản", hef: "/admin/abc", icon: "ri-account-circle-fill" },
+  { name: "Cá nhân", hef: "/admin/abc", icon: "ri-account-circle-fill" },
 ];
 
 export function SideBar() {
@@ -26,12 +29,12 @@ export function SideBar() {
 
   return (
     <>
-      <div className="flex flex-col sidebar w-1/6 border-r border-slate ">
-        <div className="sidebar__top h-1/6 flex items-center sidebar__logo px-4 border-b">
+      <div className="flex h-screen flex-col sidebar w-1/6 border-r justify-between">
+        <div className="basis-1/6 sidebar__top flex items-center sidebar__logo px-4 border-b">
           <h1 className="font-bold text-2xl text-blue-800"> Admin </h1>
         </div>
 
-        <div className="sidebar__center h-5/6 border-b">
+        <div className="basis-4/6 sidebar__center border-b">
           <ul className="flex flex-col justify-center">
             {sideBarMenu.map((item, index) => (
               <NavLink
@@ -51,8 +54,8 @@ export function SideBar() {
             ))}
           </ul>
         </div>
-        <div className="sidebar__bottom flex flex-col py-2 text-gray-500 h-1/6">
-          <ul className="flex flex-col justify-between">
+        <div className="basis-1/6 sidebar__bottom text-gray-500">
+          <ul className="flex flex-col justify-center h-full">
             {sideBarBottomMenu.map((item, index) => (
               <NavLink
                 key={index}
@@ -61,7 +64,7 @@ export function SideBar() {
                   isActive ? activeLink : inactiveLink
                 }
               >
-                <div className="flex items-center">
+                <div className="flex items-start">
                   <span className="mr-2 text-lg">
                     <i className={item.icon}></i>
                   </span>
@@ -76,7 +79,7 @@ export function SideBar() {
               }
               onClick={handleLogout}
             >
-              <div className="flex items-center">
+              <div className="flex items-start">
                 <span className="mr-2 text-lg">
                   <i className="ri-arrow-left-circle-fill"></i>
                 </span>

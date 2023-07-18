@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { authActions } from "./auth.slice";
-import { call, delay, fork, put, take, takeLatest } from "redux-saga/effects";
+import { call, fork, put, take, takeLatest } from "redux-saga/effects";
 import { LoginModel } from "../../../models/auth.model";
 import authApi from "../../../api/authApi";
 import { User } from "../../../models/user.model";

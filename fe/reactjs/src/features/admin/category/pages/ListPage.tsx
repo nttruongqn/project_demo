@@ -14,8 +14,9 @@ import { Box, Pagination } from "@mui/material";
 import { Category } from "../../../../models";
 import { categoryApi } from "../../../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "../../../../components/Helmet/Helmet";
 
-export interface ListPageProps {}
+export interface ListPageProps { }
 
 export function ListPage(props: ListPageProps) {
   const categoryList = useAppSelector(selectCategoryList);
@@ -42,8 +43,8 @@ export function ListPage(props: ListPageProps) {
   const handleRemoveCategory = async (category: Category) => {
     try {
       await categoryApi.delete(category?.id || '')
-      const newFilter = {...filter}
-      dispatch(categoryActions.setFilter({newFilter}))
+      const newFilter = { ...filter }
+      dispatch(categoryActions.setFilter({ newFilter }))
     } catch (error) {
       console.log('Delete failed')
     }
@@ -55,23 +56,25 @@ export function ListPage(props: ListPageProps) {
 
   return (
     <>
-      <div className="category__list-wrapper w-full h-full flex flex-col justify-between">
-        <ListPageHeader title="Danh mục" btnContent="+ Thêm danh mục" linkButton="add" />
-        <div className="category__list-center w-full p-5 h-[90%]">
-          <div className="category__list-main shadow-md p-3 z-10">
-            <CategoryFilter
-              filter={filter}
-              onSearchChange={handleSearchChange}
-            />
-            <CategoryTable categoryList={categoryList} onRemove={handleRemoveCategory} onEdit={handleEditCategory
-            } />
-            <Box mt={2} display="flex" justifyContent="flex-end" >
-            <Pagination count={pagination.totalPages} page={pagination.currentPage} variant="outlined" shape="rounded" onChange={handlePageChange} />
-            </Box>
+      <Helmet title="Danh mục">
+        <div className="category__list-wrapper w-full h-full flex flex-col justify-between">
+          <ListPageHeader title="Danh mục" btnContent="+ Thêm danh mục" linkButton="add" showBtn={true} />
+          <div className="category__list-center w-full p-5 h-[90%]">
+            <div className="category__list-main shadow-md p-3 z-10">
+              <CategoryFilter
+                filter={filter}
+                onSearchChange={handleSearchChange}
+              />
+              <CategoryTable categoryList={categoryList} onRemove={handleRemoveCategory} onEdit={handleEditCategory
+              } />
+              <Box mt={2} display="flex" justifyContent="flex-end" >
+                <Pagination count={pagination.totalPages} page={pagination.currentPage} variant="outlined" shape="rounded" onChange={handlePageChange} />
+              </Box>
+            </div>
           </div>
+          {/* <div className="category__list-bottom border-t h-[10%]">footer</div> */}
         </div>
-        {/* <div className="category__list-bottom border-t h-[10%]">footer</div> */}
-      </div>
+      </Helmet>
     </>
   );
 }

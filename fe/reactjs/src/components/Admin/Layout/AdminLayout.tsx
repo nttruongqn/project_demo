@@ -1,14 +1,13 @@
 import { SideBar } from "../Common/Sidebar";
-import { Main } from "../../../pages/Main";
-export interface AdminLayoutProps {}
+import { AdminMain } from "../../../pages/AdminMain";
 
-export function AdminLayout(props: AdminLayoutProps) {
+export function AdminLayout() {
   return (
     <>
       {/* <Header /> */}
-      <div className="min-h-screen h-auto container-fluid flex">
+      <div className="flex h-screen">
         <SideBar />
-        <Main />
+        <AdminMain />
       </div>
     </>
   );

@@ -7,8 +7,9 @@ import productReducer from '../features/admin/product/product.slice';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
-import { Reducer } from 'react';
-import { PersistPartial } from 'redux-persist/es/persistReducer';
+import userReducer from '../features/admin/user/user.slice';
+import transactionReducer from '../features/admin/transaction/transaction.slice';
+import productListReducer from '../features/user/productList/productList.slice';
 
 const commonConfig = {
   storage: storage,
@@ -26,7 +27,10 @@ const persistedReducer = persistReducer<AuthSlice>(profileConfig, authReducer)
 const rootReducer = combineReducers({
   auth: persistedReducer,
   category: categoryReducer,
-  product: productReducer
+  product: productReducer,
+  user: userReducer,
+  transaction: transactionReducer,
+  productList: productListReducer
 });
 
 

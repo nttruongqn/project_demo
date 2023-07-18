@@ -1,11 +1,13 @@
 import { Category } from "./category.model";
+import { MobileSystem } from "./mobile-system.model";
 import { User } from "./user.model";
 
 export interface Product {
     id?: string,
     name: string;
     slug: string;
-    categoryId: string; 
+    categoryId: string;
+    brandId: string; 
     price: number;
     authId: string;
     isSale: boolean;
@@ -26,6 +28,8 @@ export interface Product {
     file: any;
     category: Category;
     user: User;
+    sale: number;
+    mobileSystem: MobileSystem;
     createdAt: string;
     updatedAt: string;
 }

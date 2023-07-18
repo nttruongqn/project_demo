@@ -4,6 +4,7 @@ import { AddEditPageHeader } from "../../../../components/Admin/Common/AddEditPa
 import { CategoryForm } from "../components/CategoryForm";
 import { Category } from "../../../../models";
 import { categoryApi } from "../../../../api/categoryApi";
+import { Helmet } from "../../../../components/Helmet/Helmet";
 export interface AddEditPageProps {}
 
 export function AddEditPage(props: AddEditPageProps) {
@@ -47,6 +48,7 @@ export function AddEditPage(props: AddEditPageProps) {
   };
   return (
     <>
+      <Helmet title="Danh mục">
       <div className="category__add-edit-wrapper w-full h-full flex flex-col">
         {isEdit ? (
           <AddEditPageHeader edit={edit} breadcrumb={breadcrumb} />
@@ -63,6 +65,7 @@ export function AddEditPage(props: AddEditPageProps) {
           )}
         </div>
       </div>
+      </Helmet>
     </>
   );
 }

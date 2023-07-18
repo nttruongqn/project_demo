@@ -26,9 +26,8 @@ export function CategoryForm({ initialValues, onSubmit }: CategoryFormProps) {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<Category>({
-    defaultValues: initialValues,
-    resolver: yupResolver(schema),
-  });
+    defaultValues: initialValues
+  })
 
   const handleFormSubmit = async(formValues: Category) => {
     try {

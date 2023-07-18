@@ -20,8 +20,11 @@ export class TransactionEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   phone: string;
 
-  @Column({ type: 'boolean', default: false })
-  status: boolean;
+  @Column({ type: 'varchar', default: false })
+  status: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  fullName: string;
 
   @ManyToOne(() => UserEntity)
   user: UserEntity;

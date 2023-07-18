@@ -4,8 +4,6 @@ import {
   IsString,
   MaxLength,
   MinLength,
-  IsNotEmpty,
-  IsEnum,
 } from 'class-validator';
 import { CategoryTypeEnum } from '../../enums/category-list-type.enum';
 import { SortDirectionEnum } from 'src/core/enums/sort-direction.enum';
@@ -30,11 +28,10 @@ export class CategoryListDto {
   searchKey?: string;
 
   @ApiProperty({ type: String, enum: CategoryTypeEnum })
-  @IsNotEmpty()
-  @IsEnum(CategoryTypeEnum)
+  @IsOptional()
   sort?: CategoryTypeEnum;
 
   @ApiProperty({ type: String, enum: SortDirectionEnum })
-  @IsEnum(SortDirectionEnum)
+  @IsOptional()
   order?: SortDirectionEnum;
 }

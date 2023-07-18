@@ -11,7 +11,6 @@ export class RoleService {
   ) {}
 
   findOne(condition): Promise<RoleEntity> {
-    console.log(condition);
     return this.roleRepo.findOne({ where: condition });
   }
 

@@ -1,11 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsOptional,
   IsString,
   IsNumber,
   IsBoolean,
+  IsUUID,
 } from 'class-validator';
+import { UpdateMobileSystemDto } from 'src/mobile-systems/http/dtos/update-mobile-system.dto';
 
 export class UpdateProductDto {
   @ApiProperty()
@@ -13,17 +16,24 @@ export class UpdateProductDto {
   @IsOptional()
   name?: string;
 
+  @IsOptional()
   @IsString()
   slug: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  @IsUUID()
   categoryId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  mobileSystemId: string;
 
   @ApiProperty()
   @IsNumber()
   @IsOptional()
+  @Transform(({ value }) => parseFloat(value))
   price?: number;
 
   @ApiProperty()
@@ -72,8 +82,19 @@ export class UpdateProductDto {
   keywordSeo?: string;
 
   @IsString()
+  @IsOptional()
   image: string;
 
   @IsString()
+  @IsOptional()
   imageUrl: string;
+
+  @ApiProperty({ type: String })
+  @IsUUID()
+  @IsOptional()
+  brandId?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  mobileSystem?: UpdateMobileSystemDto;
 }

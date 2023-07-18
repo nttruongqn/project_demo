@@ -17,7 +17,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { CategoryListDto } from '../dtos/category-list.dto';
 import { UpdateCategoryDto } from '../dtos/update-category.dto';
 
-@ApiTags('Categories')
+@ApiTags('Category')
 @Controller('categories')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}

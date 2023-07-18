@@ -9,7 +9,7 @@ import { productApi } from "../../../api/productApi";
 function* fetchProductList(action: PayloadAction<ListParams>) {
   try {
     const response: ListResponse<Product> = yield call(
-      productApi.getAll,
+      productApi.getAllPaginate,
       action.payload
     );
     yield put(productActions.fetchProductListSuccess(response));

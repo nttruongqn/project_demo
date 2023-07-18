@@ -35,4 +35,14 @@ export class OrderService {
     });
     return this.orderRepo.save(cartItemsToOrder);
   }
+
+  async deleteOrder(id: string) {
+    return this.orderRepo.delete(id);
+  }
+
+  async deleteManyOrder(ids: string[]) {
+    ids.map((item) => {
+      return this.orderRepo.delete(item);
+    });
+  }
 }

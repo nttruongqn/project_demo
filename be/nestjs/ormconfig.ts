@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   entities: ['dist/**/*.entity.js'],
-  logging: true,
+  logging: false,
   synchronize: false,
   migrationsRun: false,
   migrations: ['dist/**/migrations/*.js'],

@@ -19,6 +19,9 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'uuid' })
   roleId: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  refreshToken: string;
+
   @ManyToOne(() => RoleEntity)
   role: RoleEntity;
 

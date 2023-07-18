@@ -4,9 +4,8 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
-  IsNotEmpty,
   IsEnum,
+  IsUUID,
 } from 'class-validator';
 import { SortDirectionEnum } from 'src/core/enums/sort-direction.enum';
 import { ProductTypeEnum } from '../../enums/product-list-type.enum';
@@ -27,20 +26,28 @@ export class ProductListDto {
   @IsOptional()
   @IsString()
   @MaxLength(255)
-  @MinLength(1)
   searchKey?: string;
 
   @ApiProperty({ type: String, enum: CategoryTypeSearchEnum })
-  @IsNotEmpty()
-  @IsEnum(CategoryTypeSearchEnum)
+  @IsOptional()
   categoryType?: CategoryTypeSearchEnum;
 
   @ApiProperty({ type: String, enum: ProductTypeEnum })
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(ProductTypeEnum)
   sort?: ProductTypeEnum;
 
   @ApiProperty({ type: String, enum: SortDirectionEnum })
   @IsEnum(SortDirectionEnum)
+  @IsOptional()
   order?: SortDirectionEnum;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsUUID()
+  brandId?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  isSale?: boolean;
 }

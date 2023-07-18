@@ -55,7 +55,7 @@ const productSlice = createSlice({
   },
 });
 
-//actions
+//action
 export const productActions = productSlice.actions;
 
 // selector

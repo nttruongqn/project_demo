@@ -2,6 +2,7 @@ import * as React from "react";
 import { Product } from "../../../../models";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
 import { ListParams } from "../../../../models/common";
+import { formatCurrency } from "../../../../core/formatCurrency";
 
 export interface ProductTableProps {
   productList: Product[];
@@ -63,7 +64,7 @@ export function ProductTable({
             <th className="w-[20%] border-b border-r p-3 text-start">
               <div className="th__content w-full flex items-center gap-2">
                 <span>Tên</span>
-                <span className="flex flex-col">
+                <span className="flex flex-col gap-1.5 ">
                   <span data-value='name.ASC' onClick={handleSortType}><i className="ri-arrow-up-s-fill relative top-2.5 " ></i></span>
                   <span data-value='name.DESC' onClick={handleSortType} ><i className="ri-arrow-down-s-fill relative bottom-2.5 "></i></span>
                 </span>
@@ -72,7 +73,7 @@ export function ProductTable({
             <th className="w-[10%] border-b border-r p-3 text-start">
               <div className="th__content w-full flex items-center gap-2">
                 <span>Giá</span>
-                <span className="flex flex-col">
+                <span className="flex flex-col gap-1.5">
                 <span data-value='price.ASC' onClick={handleSortType}><i className="ri-arrow-up-s-fill relative top-2.5"></i></span>
                 <span data-value='price.DESC' onClick={handleSortType}> <i className="ri-arrow-down-s-fill relative bottom-2.5"></i></span>
                 </span>
@@ -86,7 +87,7 @@ export function ProductTable({
             <th className="w-[10%] border-b border-r p-3 text-start">
               <div className="th__content w-full flex items-center gap-2">
                 <span>Tạo</span>
-                <span className="flex flex-col">
+                <span className="flex flex-col gap-1.5">
                 <span data-value='createdAt.ASC' onClick={handleSortType}><i className="ri-arrow-up-s-fill relative top-2.5"></i></span>
                 <span data-value='createdAt.DESC' onClick={handleSortType}> <i className="ri-arrow-down-s-fill relative bottom-2.5"></i></span>
                 </span>
@@ -95,7 +96,7 @@ export function ProductTable({
             <th className="w-[10%] border-b border-r p-3 text-start">
               <div className="th__content w-full flex items-center gap-2">
                 <span>Cập nhật</span>
-                <span className="flex flex-col">
+                <span className="flex flex-col gap-1.5">
                 <span data-value='updatedAt.ASC' onClick={handleSortType}><i className="ri-arrow-up-s-fill relative top-2.5"></i></span>
                 <span data-value='updatedAt.DESC' onClick={handleSortType}> <i className="ri-arrow-down-s-fill relative bottom-2.5"></i></span>
                 </span>
@@ -118,7 +119,7 @@ export function ProductTable({
                 {item.name}
               </td>
               <td className="border-b border-r p-3 text-start">
-                {item.price}
+                {formatCurrency(item.price)}
               </td>
               <td className="border-b border-r p-3 text-start">
                 <img src={item.imageUrl} className="w-[100px] h-[100px] object-contain border" alt={item.image} />

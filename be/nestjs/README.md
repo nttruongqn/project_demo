@@ -70,16 +70,22 @@ $ npm run migration:revert
  const indexName = '"IDX_USER_TRANSACTION"';
  const constraintName = '"FK_USER_TRANSACTION"', '"UQ_USER_EMAIl"';
  const tableName = '"Transaction"';
+ const newTableName ='"Transaction"';
+ const oldColumn = '"productId"';
+ const newColumn = '"productId"';
  const columnName = '"productId"';
  const columnType = 'uuid';
  const referencedTable = '"Product"';
- const referencedColumn = 'id';
+ const referencedColumn = '"id"';
 
 await queryRunner.query(``)
 
+ALTER TABLE ${tableName} RENAME TO ${newTableName}
+ALTER TABLE ${tableName} RENAME COLUMN ${oldColunm} TO ${nedColunm}`,
+
 ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnType}
 ALTER TABLE ${tableName} DROP COLUMN ${columnName}
-ALTER TABLE  ${tableName}" ALTER COLUMN ${columnName} TYPE ${columnType}
+ALTER TABLE  ${tableName} ALTER COLUMN ${columnName} TYPE ${columnType}
 
 ALTER TABLE ${tableName}
 ADD CONSTRAINT ${constraintName} FOREIGN KEY (${columnName})
