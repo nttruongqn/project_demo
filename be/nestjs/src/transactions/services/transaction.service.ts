@@ -12,6 +12,7 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { OrderService } from 'src/orders/services/order.service';
 import { ProductService } from 'src/products/services/product.service';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class TransactionService {
@@ -21,6 +22,7 @@ export class TransactionService {
     @Inject(forwardRef(() => OrderService))
     private orderService: OrderService,
     private productService: ProductService,
+    private mailService: MailerService,
   ) {}
 
   handleTransaction(
@@ -53,7 +55,7 @@ export class TransactionService {
       transactionStatusType &&
       transactionStatusType !== TransactionStatusEnum.ALL
     ) {
-      qb.andWhere('transaction.status = :staus', {
+      qb.andWhere('transaction.status = :status', {
         status: transactionStatusType,
       });
     }
@@ -65,9 +67,39 @@ export class TransactionService {
     return paginate<TransactionEntity>(qb, options);
   }
 
-  async changeStatusTransaction(id: string) {
+  async changeTransactionSuccessStatus(id: string) {
+    const transaction = await this.findByIdWithRelations(id);
+    const { user, orders } = transaction;
+    await this.mailService.sendMail({
+      to: user.email,
+      subject: 'Xác nhận thanh toán thành công',
+      template: 'transaction-success',
+      context: {
+        id: transaction.id,
+        fullName: transaction.fullName,
+        phone: transaction.phone,
+        address: transaction.address,
+        amount: transaction.totalAmount,
+        orders,
+      },
+    });
+
     return this.transactionRepo.update(id, {
       status: TransactionStatusEnum.COMPLETE,
+    });
+  }
+
+  async changeTransactionCancellationStatus(id: string) {
+    const transaction = await this.findByIdWithRelations(id);
+    await this.transactionRepo.update(id, {
+      status: TransactionStatusEnum.CANCELLATION,
+    });
+    await this.revokeTransactionRelatedRelationships(id);
+    const { user } = transaction;
+    await this.mailService.sendMail({
+      to: user.email,
+      subject: 'Đơn hàng của bạn bị đã hủy',
+      template: 'order-cancellation',
     });
   }
 
@@ -75,7 +107,22 @@ export class TransactionService {
     return this.transactionRepo.findOneByOrFail({ id });
   }
 
+  findByIdWithRelations(id: string): Promise<TransactionEntity> {
+    return this.transactionRepo
+      .createQueryBuilder('Transaction')
+      .leftJoinAndSelect('Transaction.user', 'User')
+      .leftJoinAndSelect('Transaction.orders', 'Orders')
+      .leftJoinAndSelect('Orders.product', 'Product')
+      .where('Transaction.id = :id', { id })
+      .getOne();
+  }
+
   async revokeTransaction(id: string) {
+    await this.revokeTransactionRelatedRelationships(id);
+    await this.deleteTransaction(id);
+  }
+
+  private async revokeTransactionRelatedRelationships(id: string) {
     const transaction = await this.getTransactionRelations(id);
     const orderList = transaction.orders;
     const orderIds = orderList.map((item) => item.id);
@@ -90,8 +137,9 @@ export class TransactionService {
       );
     }
 
-    await this.orderService.deleteManyOrder(orderIds);
-    await this.deleteTransaction(id);
+    if (transaction.status !== TransactionStatusEnum.CANCELLATION) {
+      await this.orderService.deleteManyOrder(orderIds);
+    }
   }
 
   async deleteTransaction(id: string) {
@@ -105,5 +153,27 @@ export class TransactionService {
       .leftJoinAndSelect('transaction.orders', 'orders')
       .leftJoinAndSelect('orders.product', 'product')
       .getOne();
+  }
+
+  async getTotalNumberTransactions(): Promise<number> {
+    return this.transactionRepo.count();
+  }
+
+  getTransactionListSuccessByMonth(month: string, year: string) {
+    return this.transactionRepo
+      .createQueryBuilder('transaction')
+      .where('EXTRACT(MONTH FROM transaction."updatedAt") = :month', { month })
+      .andWhere('EXTRACT(YEAR FROM transaction."updatedAt") = :year', { year })
+      .andWhere('transaction.status = :status', { status: 'Đã xử lý' })
+      .getCount();
+  }
+
+  getTransactionListCancellationByMonth(month: string, year: string) {
+    return this.transactionRepo
+      .createQueryBuilder('transaction')
+      .where('EXTRACT(MONTH FROM transaction."updatedAt") = :month', { month })
+      .andWhere('EXTRACT(YEAR FROM transaction."updatedAt") = :year', { year })
+      .andWhere('transaction.status = :status', { status: 'Đã hủy bỏ' })
+      .getCount();
   }
 }

@@ -17,8 +17,8 @@ export interface IRegisterFormProps {
 
 const schema = yup.object({
     email: yup.string().required("Vui lòng nhập email"),
-    password: yup.string().required("Vui lòng nhập mật khẩU").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự'),
-    repassword: yup.string().required("Vui lòng nhập lại mật khẩU").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự').oneOf([yup.ref("password")], 'Mật khẩu không khớp'),
+    password: yup.string().required("Vui lòng nhập mật khẩu").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự'),
+    repassword: yup.string().required("Vui lòng nhập lại mật khẩu").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự').oneOf([yup.ref("password")], 'Mật khẩu không khớp'),
     username: yup.string().required("Vui lòng nhập tên tài khoản"),
 }).required();
 
@@ -52,7 +52,7 @@ export function RegisterForm({ initialValues, onRegisterSubmit, isRegisterSucces
                     type="submit"
                     variant="contained"
                     disabled={isSubmitting}
-                    className=' !bg-red-700'
+                    className='!bg-red-700'
                 >
                     {isSubmitting && <CircularProgress size={16} />} &nbsp;Đăng ký
                 </Button>

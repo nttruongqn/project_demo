@@ -24,6 +24,7 @@ import { AuthController } from './http/controllers/auth.controller';
     JwtModule.registerAsync(jwtConfig),
   ],
   controllers: [UserController, AdminAuthController, AuthController],
-  providers: [UserService, AuthService, JwtStrategy],
+  providers: [UserService, AuthService, JwtStrategy, String],
+  exports: [UserService],
 })
 export class UserModule {}

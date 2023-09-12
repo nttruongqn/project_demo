@@ -22,7 +22,8 @@ export function ProductListData({ productList, loading }: IProductListDataProps)
                                 <Link to={`/dien-thoai/${product.slug}`}>
 
                                     <div className="max-md:h-auto">
-                                        <motion.img whileHover={{ scale: 0.9 }} src={product.imageUrl} alt="" />                                    </div>
+                                        <motion.img whileHover={{ scale: 0.9 }} src={product.imageUrl} alt="" />
+                                    </div>
                                     <div className="py-2 px-2 w-full">
                                         <div>
                                             <h3 className="text-left text-sm text-ellipsis line-clamp-2"> {product.name}

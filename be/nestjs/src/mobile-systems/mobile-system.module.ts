@@ -167,6 +167,11 @@ import { IsUniqueConstraint } from 'src/core/validation/is-unique-constraint';
     MaterialService,
     IsUniqueConstraint,
   ],
-  exports: [MobileSystemService],
+  exports: [
+    MobileSystemService,
+    RamService,
+    RomService,
+    BatteryCapacityService,
+  ],
 })
 export class MobileSystemModule {}

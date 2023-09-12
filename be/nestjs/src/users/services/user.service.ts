@@ -12,6 +12,8 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { UserListDto } from '../http/dtos/user-list.dto';
 import { RoleTypeSearchEnum } from '../enums/role-type-search.enum';
+import { UserStatusEnum } from '../enums/user-status.enum';
+import { Exception } from 'handlebars';
 
 @Injectable()
 export class UserService {
@@ -27,6 +29,12 @@ export class UserService {
       throw new HttpException('Tài khoản đã tồn tại', HttpStatus.BAD_REQUEST);
     }
     return this.userRepository.save(body);
+  }
+
+  async updatePassword(id: string, newPassword: string) {
+    await this.userRepository.update(id, {
+      password: await bcrypt.hash(newPassword, 10),
+    });
   }
 
   async findByLogin(body: UserLoginDto): Promise<UserEntity> {
@@ -120,5 +128,53 @@ export class UserService {
 
   private reverse(s) {
     return s.split('').reverse().join('');
+  }
+
+  async getTotalNumberUsers(): Promise<number> {
+    return this.userRepository.count();
+  }
+
+  async updateEmailToken(user: UserEntity) {
+    if (
+      user &&
+      user.timestamp &&
+      (new Date().getTime() - user.timestamp.getTime()) / 60000 < 15
+    ) {
+      throw new Exception('Email was sent recently');
+    }
+    await this.userRepository.update(user.id, {
+      token: (Math.floor(Math.random() * 9000000) + 1000000).toString(),
+      timestamp: new Date(),
+    });
+  }
+
+  async changeStatusActiveForUser(id: string) {
+    await this.userRepository.update(id, {
+      status: UserStatusEnum.ACTIVE,
+    });
+  }
+
+  async updatePasswordToken(user: UserEntity) {
+    if (
+      user &&
+      user.timestamp &&
+      (new Date().getTime() - user.timestamp.getTime()) / 60000 > 15
+    ) {
+      throw new HttpException(
+        'Email đã được gửi gần đây',
+        HttpStatus.BAD_REQUEST,
+      );
+    } else {
+      await this.userRepository.update(user.id, {
+        passwordToken: (
+          Math.floor(Math.random() * 9000000) + 1000000
+        ).toString(),
+        timestamp: new Date(),
+      });
+    }
+  }
+
+  async getForgottenPassword(passwordToken: string) {
+    return this.findOne({ where: { passwordToken } });
   }
 }

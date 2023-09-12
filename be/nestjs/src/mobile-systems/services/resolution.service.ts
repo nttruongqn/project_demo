@@ -21,4 +21,13 @@ export class ResolutionService {
   findAll() {
     return this.resolutionRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const material = await this.resolutionRepo.save({ name });
+    return material.id;
+  }
+
+  async delete(id: string) {
+    await this.resolutionRepo.delete(id);
+  }
 }

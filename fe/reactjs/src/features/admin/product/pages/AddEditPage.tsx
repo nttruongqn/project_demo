@@ -47,11 +47,11 @@ export function AddEditPage() {
   } as Product;
 
   const handlePayload = (formValues: ProductDataPayload): ProductPayload => {
-    const { id, name, categoryId, brandId, price, filmRearCameraId, advancedShootingId,
-      wideScreenId, resolutionId, technologyScreenId, resolutionRearCameraId, resolutionFrontCameraId, videoCallId, operationSystemId,
+    const { id, name, categoryId, brandId, price, filmRearCameraName, advancedShootingName,
+      wideScreenName, resolutionName, technologyScreenId, resolutionRearCameraName, resolutionFrontCameraName, videoCallName, operationSystemId,
       cpuId, gpuId, ramId, romId, bluetoothId, mobileNetworkId,
       chargingPortId, networkConnectionId, simId, wifiId, gpsId,
-      otherConnectId, batteryTypeId, batteryTechnologyId, batteryCapacityId,
+      otherConnectId, batteryTypeId, batteryTechnologyName, batteryCapacityId,
       designId, weightName, materialName, sizeName, sdCardId, isFlashLight, contentHTML, file
     } = formValues;
     return {
@@ -64,19 +64,19 @@ export function AddEditPage() {
       file,
       mobileSystem: {
         screen: {
-          wideScreenId,
-          resolutionId,
+          wideScreenName,
+          resolutionName,
           technologyScreenId,
         },
         rearCamera: {
-          advancedShootingId,
-          filmRearCameraId,
-          resolutionRearCameraId,
+          advancedShootingName,
+          filmRearCameraName,
+          resolutionRearCameraName,
           isFlashLight: isFlashLight ? isFlashLight : false,
         },
         frontCamera: {
-          resolutionFrontCameraId,
-          videoCallId
+          resolutionFrontCameraName,
+          videoCallName
         },
         operationSystemCPUGPU: {
           operationSystemId,
@@ -101,7 +101,7 @@ export function AddEditPage() {
         battery: {
           batteryTypeId,
           batteryCapacityId,
-          batteryTechnologyId
+          batteryTechnologyName
         },
         designInfo: {
           designId,
@@ -109,8 +109,8 @@ export function AddEditPage() {
           sizeName,
           materialName
         },
-      }
-    } as ProductPayload;
+      } 
+    } as ProductPayload ;
   }
 
   const handleFormData = (formValues: ProductPayload) => {
@@ -136,7 +136,6 @@ export function AddEditPage() {
 
   const handleFormSubmit = async (datas: ProductDataPayload) => {
     const formValues: ProductPayload = handlePayload(datas);
-    console.log('formV', formValues);
     if (isEdit && productId) {
       if (!formValues.file) {
         if (userId) {
@@ -151,7 +150,6 @@ export function AddEditPage() {
         if (userId) {
           formValues.authId = userId
         }
-        console.log('formValues', formValues)
         await productApi.addWithEmptyImage(formValues);
       } else {
         await productApi.add(handleFormData(formValues));

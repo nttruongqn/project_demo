@@ -130,37 +130,61 @@ export class MobileSystemService {
 
   async updateMobileSystem(id: string, data: MobileSystemDto) {
     const mobileSystem = await this.findOneById(id);
-
-    if (mobileSystem) {
-      const {
-        screenId,
-        rearCameraId,
-        frontCameraId,
-        operationSystemCPUGPUId,
-        ramRomId,
-        connectId,
-        batteryId,
-        designInfoId,
-      } = mobileSystem;
-
-      const deleteServices = [
-        { id: screenId, service: this.screenService },
-        { id: rearCameraId, service: this.rearCameraService },
-        { id: frontCameraId, service: this.frontCameraService },
-        { id: operationSystemCPUGPUId, service: this.osCPUGPUService },
-        { id: ramRomId, service: this.ramRomService },
-        { id: connectId, service: this.connectService },
-        { id: batteryId, service: this.batteryService },
-        { id: designInfoId, service: this.designInfoService },
-      ];
-
-      for (const { id, service } of deleteServices) {
-        if (id !== null) {
-          await service.delete(id);
-        }
-      }
-      await this.mobileSystemRepo.delete(mobileSystem.id);
+    if (mobileSystem.screenId) {
+      await this.screenService.delete(mobileSystem.screenId);
     }
+    if (mobileSystem.rearCameraId) {
+      await this.rearCameraService.delete(mobileSystem.rearCameraId);
+    }
+    if (mobileSystem.frontCameraId) {
+      await this.frontCameraService.delete(mobileSystem.frontCameraId);
+    }
+    if (mobileSystem.operationSystemCPUGPUId) {
+      await this.osCPUGPUService.delete(mobileSystem.operationSystemCPUGPUId);
+    }
+    if (mobileSystem.ramRomId) {
+      await this.ramRomService.delete(mobileSystem.ramRomId);
+    }
+    if (mobileSystem.connectId) {
+      await this.connectService.delete(mobileSystem.connectId);
+    }
+    if (mobileSystem.batteryId) {
+      await this.batteryService.delete(mobileSystem.batteryId);
+    }
+    if (mobileSystem.designInfoId) {
+      await this.designInfoService.delete(mobileSystem.designInfoId);
+    }
+
+    // if (mobileSystem) {
+    //   const {
+    //     screenId,
+    //     rearCameraId,
+    //     frontCameraId,
+    //     operationSystemCPUGPUId,
+    //     ramRomId,
+    //     connectId,
+    //     batteryId,
+    //     designInfoId,
+    //   } = mobileSystem;
+
+    //   const deleteServices = [
+    //     { id: screenId, service: this.screenService },
+    //     { id: rearCameraId, service: this.rearCameraService },
+    //     { id: frontCameraId, service: this.frontCameraService },
+    //     { id: operationSystemCPUGPUId, service: this.osCPUGPUService },
+    //     { id: ramRomId, service: this.ramRomService },
+    //     { id: connectId, service: this.connectService },
+    //     { id: batteryId, service: this.batteryService },
+    //     { id: designInfoId, service: this.designInfoService },
+    //   ];
+
+    //   for (const { id, service } of deleteServices) {
+    //     if (id !== null) {
+    //       await service.delete(id);
+    //     }
+    //   }
+    //   await this.mobileSystemRepo.delete(mobileSystem.id);
+    // }
     return this.createMobileSystem(data);
   }
 

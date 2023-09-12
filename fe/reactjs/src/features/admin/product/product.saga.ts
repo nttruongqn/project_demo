@@ -26,7 +26,7 @@ function* handleSearchDebounce(action: PayloadAction<ListParams>) {
 export default function* productSaga() {
   yield takeLatest(productActions.fetchProductList.type, fetchProductList);
   yield debounce(
-    500,
+    700,
     productActions.setFilterWithDebounce.type,
     handleSearchDebounce
   );

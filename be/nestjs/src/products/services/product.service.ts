@@ -6,7 +6,7 @@ import {
   paginate,
 } from 'nestjs-typeorm-paginate';
 import slugify from 'slugify';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { ProductEntity } from '../entities/product.entity';
 import { CreateProductDto } from '../http/dtos/create-product.dto';
 import { UpdateProductDto } from '../http/dtos/update-product.dto';
@@ -15,6 +15,12 @@ import { FileService } from 'src/files/services/file.service';
 import { CategoryTypeSearchEnum } from '../enums/category-type-search.enum';
 import { omit } from 'lodash';
 import { MobileSystemService } from 'src/mobile-systems/services/mobile-system.service';
+import { RamService } from 'src/mobile-systems/services/ram.service';
+import { BatteryCapacityService } from 'src/mobile-systems/services/battery-capacity.service';
+import { RomService } from 'src/mobile-systems/services/rom.service';
+import { BrandService } from 'src/brands/services/brand.service';
+import { BatteryCapacityListEnum } from '../enums/battery-capacity-list.enum';
+import { PriceListEnum } from '../enums/price-list.enum';
 
 @Injectable()
 export class ProductService {
@@ -23,6 +29,10 @@ export class ProductService {
     private productRepo: Repository<ProductEntity>,
     private fileService: FileService,
     private mobileSystemService: MobileSystemService,
+    private ramService: RamService,
+    private romService: RomService,
+    private batteryCapacityService: BatteryCapacityService,
+    private brandService: BrandService,
   ) {}
 
   async findById(id: string): Promise<ProductEntity> {
@@ -168,6 +178,17 @@ export class ProductService {
         weightName: qb.mobileSystem.designInfo?.weight?.name,
         sizeName: qb.mobileSystem.designInfo?.size?.name,
         materialName: qb.mobileSystem.designInfo?.material?.name,
+        wideScreenName: qb.mobileSystem.screen?.wideScreen?.name,
+        resolutionName: qb.mobileSystem.screen?.resolution?.name,
+        filmRearCameraName: qb.mobileSystem.rearCamera?.filmRearCamera?.name,
+        advancedShootingName:
+          qb.mobileSystem.rearCamera?.advancedShooting?.name,
+        resolutionRearCameraName:
+          qb.mobileSystem.rearCamera?.resolutionRearCamera?.name,
+        resolutionFrontCameraName:
+          qb.mobileSystem.frontCamera?.resolutionFrontCamera?.name,
+        videoCallName: qb.mobileSystem.frontCamera?.videoCall?.name,
+        batteryTechnologyName: qb.mobileSystem.battery?.batteryTechnology?.name,
       } as ProductEntity;
     }
     return qb;
@@ -207,36 +228,145 @@ export class ProductService {
       order,
       brandId,
       isSale,
+      brandListIds,
+      priceListValues,
+      batteryCapacityListValues,
+      ramListIds,
+      romListIds,
+      brandIdQueryParam,
     } = query;
+    console.log(
+      brandListIds,
+      priceListValues,
+      batteryCapacityListValues,
+      ramListIds,
+      romListIds,
+    );
     const options: IPaginationOptions = {
       limit,
       page,
     };
-    const qb = this.productRepo.createQueryBuilder('product');
+    const qb = this.productRepo.createQueryBuilder('Product');
 
     if (categoryType && categoryType !== CategoryTypeSearchEnum.ALL) {
-      qb.leftJoinAndSelect('product.category', 'category').andWhere(
-        'category.name = :name',
-        { name: categoryType },
-      );
+      qb.leftJoinAndSelect('Product.category', 'Category')
+        .leftJoinAndSelect('Product.mobileSystem', 'MobileSystem')
+        .leftJoinAndSelect('MobileSystem.ramRom', 'RamRom')
+        .leftJoinAndSelect('MobileSystem.battery', 'Battery')
+        .leftJoinAndSelect('Battery.batteryCapacity', 'BatteryCapacity')
+        .andWhere('Category.name = :name', { name: categoryType });
     }
-
     if (searchKey && searchKey.trim() !== '') {
-      qb.andWhere('product.name ILIKE :searchKey', {
+      qb.andWhere('Product.name ILIKE :searchKey', {
         searchKey: `%${searchKey}%`,
       });
     }
-
     if (sort && order) {
-      qb.orderBy(`product.${sort}`, order);
+      qb.orderBy(`Product.${sort}`, order);
     }
-
     if (brandId) {
-      qb.andWhere('product.brandId = :brandId', { brandId });
+      qb.andWhere('Product.brandId = :brandId', { brandId });
     }
-
+    if (brandIdQueryParam) {
+      qb.andWhere('Product.brandId = :brandIdQueryParam', {
+        brandIdQueryParam,
+      });
+    }
     if (isSale) {
-      qb.andWhere('product.isSale = :isSale', { isSale: true });
+      qb.andWhere('Product.isSale = :isSale', { isSale: true });
+    }
+    if (brandListIds) {
+      qb.andWhere('Product.brandId IN (:...brandListIds)', { brandListIds });
+    }
+    if (ramListIds) {
+      qb.andWhere('RamRom.ramId IN (:...ramListIds)', { ramListIds });
+    }
+    if (romListIds) {
+      qb.andWhere('RamRom.romId IN (:...romListIds)', { romListIds });
+    }
+    if (batteryCapacityListValues) {
+      qb.andWhere(
+        new Brackets((qb) => {
+          if (
+            batteryCapacityListValues.includes(
+              BatteryCapacityListEnum.LESSTHAN3000,
+            )
+          ) {
+            qb.where('BatteryCapacity.name < :valueLessThan3000', {
+              valueLessThan3000: 3000,
+            });
+          }
+          if (
+            batteryCapacityListValues.includes(
+              BatteryCapacityListEnum.BETWEEN3000AND4000,
+            )
+          ) {
+            qb.orWhere(
+              'BatteryCapacity.name BETWEEN :minValue3K AND :maxValue4K ',
+              {
+                minValue3K: 3000,
+                maxValue4K: 4000,
+              },
+            );
+          }
+          if (
+            batteryCapacityListValues.includes(
+              BatteryCapacityListEnum.BETWEEN4000AND5000,
+            )
+          ) {
+            qb.orWhere(
+              'BatteryCapacity.name BETWEEN :minValue4K AND :maxValue5K ',
+              {
+                minValue4K: 4000,
+                maxValue5K: 5000,
+              },
+            );
+          }
+          if (
+            batteryCapacityListValues.includes(
+              BatteryCapacityListEnum.GREATERTHAN5000,
+            )
+          ) {
+            qb.orWhere('BatteryCapacity.name > :valueGreaterThan5000', {
+              valueGreaterThan5000: 5000,
+            });
+          }
+        }),
+      );
+    }
+    if (priceListValues) {
+      qb.andWhere(
+        new Brackets((qb) => {
+          if (priceListValues.includes(PriceListEnum.LESSTHAN2M)) {
+            qb.where('Product.price < :valueLessThan2M', {
+              valueLessThan2M: 2000000,
+            });
+          }
+          if (priceListValues.includes(PriceListEnum.BETWEEN2MAND4M)) {
+            qb.orWhere('Product.price BETWEEN :minValue2M AND :maxValue4M ', {
+              minValue2M: 2000000,
+              maxValue4M: 4000000,
+            });
+          }
+          if (priceListValues.includes(PriceListEnum.BETWEEN4MAND7M)) {
+            qb.orWhere('Product.price BETWEEN :minValue4M AND :maxValue7M ', {
+              minValue4M: 4000000,
+              maxValue7M: 7000000,
+            });
+          }
+          if (priceListValues.includes(PriceListEnum.BETWEEN7MAND13M)) {
+            qb.orWhere('Product.price BETWEEN :minValue7M AND :maxValue13M ', {
+              minValue7M: 7000000,
+              maxValue13M: 13000000,
+            });
+          }
+          if (priceListValues.includes(PriceListEnum.GREATERTHAN13M)) {
+            qb.orWhere('Product.price > :valueGreaterThan13M', {
+              valueGreaterThan13M: 13000000,
+            });
+          }
+        }),
+      );
     }
 
     return paginate(qb, options);
@@ -367,5 +497,36 @@ export class ProductService {
       totalNumber: product.totalNumber + totalNumberDto,
       totalRating: product.totalRating + 1,
     });
+  }
+
+  async getTotalNumberProducts() {
+    return this.productRepo.count();
+  }
+
+  async getElementsCheckBoxProduct() {
+    const [brands, batteryCapacitys, rams, roms] = await Promise.all([
+      (
+        await this.brandService.findAll()
+      ).map(({ id, brandName, brandImageUrl }) => {
+        return { id, brandName, brandImageUrl };
+      }),
+      (
+        await this.batteryCapacityService.findAll()
+      ).map(({ id, name }) => {
+        return { id, name };
+      }),
+      (
+        await this.ramService.findAll()
+      ).map(({ id, name }) => {
+        return { id, name };
+      }),
+      (
+        await this.romService.findAll()
+      ).map(({ id, name }) => {
+        return { id, name };
+      }),
+      ,
+    ]);
+    return { brands, batteryCapacitys, rams, roms };
   }
 }

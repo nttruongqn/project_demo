@@ -8,18 +8,17 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { IsUnique } from 'src/core/validation/is-unique';
 
 export class ScreenDto {
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  resolutionId?: string;
+  @IsString()
+  resolutionName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  wideScreenId?: string;
+  @IsString()
+  wideScreenName?: string;
 
   @ApiProperty()
   @IsOptional()
@@ -31,17 +30,17 @@ export class RearCameraDto {
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  advancedShootingId?: string;
+  advancedShootingName?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  filmRearCameraId?: string;
+  filmRearCameraName?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  resolutionRearCameraId?: string;
+  resolutionRearCameraName?: string;
 
   @ApiProperty()
   @IsBoolean()
@@ -53,12 +52,12 @@ export class FrontCameraDto {
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  resolutionFrontCameraId?: string;
+  resolutionFrontCameraName?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  videoCallId?: string;
+  videoCallName?: string;
 }
 
 export class OperationSystemCPUGPUDto {
@@ -151,7 +150,7 @@ export class BatteryDto {
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  batteryTechnologyId?: string;
+  batteryTechnologyName?: string;
 }
 
 export class DesignInfoDto {
@@ -163,19 +162,19 @@ export class DesignInfoDto {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  @IsUnique({ tableName: 'Weight', column: 'name' })
+  // @IsUnique({ tableName: 'Weight', column: 'name' })
   weightName?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  @IsUnique({ tableName: 'Size', column: 'name' })
+  // @IsUnique({ tableName: 'Size', column: 'name' })
   sizeName?: string;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  @IsUnique({ tableName: 'Material', column: 'name' })
+  // @IsUnique({ tableName: 'Material', column: 'name' })
   materialName?: string;
 }
 

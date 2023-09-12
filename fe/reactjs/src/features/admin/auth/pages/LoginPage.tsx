@@ -13,7 +13,7 @@ function LoginPage() {
 
   React.useEffect(() => {
     if(isLoggedIn){
-      navigate('/admin')
+      navigate('/admin/dashboard')
     }
   }, [isLoggedIn, navigate, dispatch])
   

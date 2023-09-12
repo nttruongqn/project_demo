@@ -52,7 +52,7 @@ export function ProductFilter({
         <input
           type="text"
           className="outline-none font-normal w-[98.5%] flex items-center"
-          placeholder="Nhập tên danh mục"
+          placeholder="Nhập tên sản phẩm"
           onChange={handleSearchChange}
           defaultValue={filter.searchKey}
         />

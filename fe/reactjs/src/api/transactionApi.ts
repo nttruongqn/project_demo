@@ -11,8 +11,12 @@ export const transactionApi = {
     const url = `/transactions/${id}`;
     return axiosClient.delete(url);
   },
-  changeStatusTransaction(id: string): Promise<void> {
-    const url = `/transactions/${id}/status`;
+  changeStatusTransactionSuccess(id: string): Promise<void> {
+    const url = `/transactions/${id}/status/success`;
+    return axiosClient.put(url);
+  },
+  changeStatusTransactionCancellation(id: string): Promise<void> {
+    const url = `/transactions/${id}/status/cancellation`;
     return axiosClient.put(url);
   },
 };

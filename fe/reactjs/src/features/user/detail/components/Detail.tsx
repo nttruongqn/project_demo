@@ -4,6 +4,7 @@ import { sale } from '../../../../core/sale';
 import { useShoppingCart } from '../../../../store/hooks';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { TotalRatingStar } from './TotalRatingStar';
 
 export interface IDetailProps {
     id: string,
@@ -13,12 +14,16 @@ export interface IDetailProps {
     percentDiscount: number;
     isSale: boolean;
     number: number;
+    totalRating: number;
+    totalNumber: number;
 }
 
-export function Detail({ id, imageUrl, name, price, percentDiscount, isSale, number }: IDetailProps) {
+export function Detail({ id, imageUrl, name, price, percentDiscount, isSale, number, totalRating, totalNumber }: IDetailProps) {
     const { setCartQuantity } = useShoppingCart();
     const [count, setCount] = React.useState(1);
     const navigate = useNavigate();
+
+    const totalNumberRating = (totalNumber / totalRating).toFixed(1) ;
 
     const increase = () => {
         if (count < number) {
@@ -48,18 +53,12 @@ export function Detail({ id, imageUrl, name, price, percentDiscount, isSale, num
             <div className="max-md:p-2 max-md:bg-white md:flex md:justify-start md:flex-col md:px-4 ">
                 <h1 className="font-bold max-md:text-md mt-2 text-2xl"> {name} </h1>
                 <div className="max-md:text-md flex gap-2 items-center md:py-2">
-                    <div className="flex gap-1">
-                        <span className="text-yellow-500"><i className="ri-star-fill"></i></span>
-                        <span className="text-yellow-500"><i className="ri-star-fill"></i></span>
-                        <span className="text-yellow-500"><i className="ri-star-fill"></i></span>
-                        <span className="text-yellow-500"><i className="ri-star-fill"></i></span>
-                        <span className="text-yellow-500"><i className="ri-star-fill"></i></span>
-                    </div>
-                    <span className="text-sm"> <span className="text-red-500 font-bold"> 4 </span>Đánh giá</span>
+                    {totalRating > 0 ? <TotalRatingStar totalNumberRating={parseFloat(totalNumberRating)} /> :  <TotalRatingStar totalNumberRating={0}/>} <span className='bold'> | </span>
+                    <span className="text-sm"> <span className="text-red-500 font-bold"> {totalRating} </span>Đánh giá</span>
                 </div>
                 <div className="md:hidden flex justify-between items-center">
                     <div className="flex flex-col">
-                        <p className="text-2xl text-red-700 font-bold">{formatCurrency(sale(percentDiscount, price))}</p>
+                        <p className="text-2txl tex-red-700 font-bold">{formatCurrency(sale(percentDiscount, price))}</p>
                         {isSale && (<p className="text-sm text-slate-500 font-bold line-through">{formatCurrency(price)} </p>)}
                     </div>
                     <div className="flex flex-col items-end">

@@ -12,13 +12,13 @@ import {
 export class ScreenDto {
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  resolutionId?: string;
+  @IsString()
+  resolutionName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  wideScreenId?: string;
+  @IsString()
+  wideScreenName?: string;
 
   @ApiProperty()
   @IsOptional()
@@ -29,18 +29,18 @@ export class ScreenDto {
 export class RearCameraDto {
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  advancedShootingId?: string;
+  @IsString()
+  advancedShootingName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  filmRearCameraId?: string;
+  @IsString()
+  filmRearCameraName?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  resolutionRearCameraId?: string;
+  @IsString()
+  resolutionRearCameraName?: string;
 
   @ApiProperty()
   @IsBoolean()
@@ -51,13 +51,13 @@ export class RearCameraDto {
 export class FrontCameraDto {
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  resolutionFrontCameraId?: string;
+  @IsString()
+  resolutionFrontCameraname?: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsUUID()
-  videoCallId?: string;
+  @IsString()
+  videoCallName?: string;
 }
 
 export class OperationSystemCPUGPUDto {
@@ -150,7 +150,7 @@ export class BatteryDto {
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  batteryTechnologyId?: string;
+  batteryTechnologyName?: string;
 }
 
 export class DesignInfoDto {

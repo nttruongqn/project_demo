@@ -35,8 +35,8 @@ export function PasswordInputField({ name, control, placeholder, label, ...input
                     helperText={error?.message}
                     inputProps={inputProps}
                     placeholder={placeholder}
-                    color={'secondary'}
-                    focused
+                    // color={'secondary'}
+                    // focused
                     type={showPassword ? 'password' : 'text' }
                     className='w-[100%]'
                 />

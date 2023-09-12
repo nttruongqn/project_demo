@@ -21,4 +21,13 @@ export class AdvancedShootingService {
   findAll() {
     return this.advancedShootingRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const advancedShooting = await this.advancedShootingRepo.save({ name });
+    return advancedShooting.id;
+  }
+
+  async delete(id: string) {
+    await this.advancedShootingRepo.delete(id);
+  }
 }

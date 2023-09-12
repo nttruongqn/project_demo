@@ -31,8 +31,8 @@ export function CustomInputField({ name, control, placeholder, label, ...inputPr
             helperText = { error?.message }
             inputProps= { inputProps }
             placeholder= {placeholder}
-            color = {'secondary'}
-            focused 
+            // color = {'secondary'}
+            // focused 
         />
     );
 }

@@ -21,4 +21,13 @@ export class WideScreenService {
   findAll() {
     return this.wideScreenRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const wideScreen = await this.wideScreenRepo.save({ name });
+    return wideScreen.id;
+  }
+
+  async delete(id: string) {
+    await this.wideScreenRepo.delete(id);
+  }
 }

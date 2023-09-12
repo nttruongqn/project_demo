@@ -21,4 +21,15 @@ export class VideoCallService {
   findAll() {
     return this.videoCallRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const videoCall = await this.videoCallRepo.save({
+      name,
+    });
+    return videoCall.id;
+  }
+
+  async delete(id: string) {
+    await this.videoCallRepo.delete(id);
+  }
 }

@@ -1,9 +1,10 @@
 import { BrandEntity } from 'src/brands/entities/brand.entity';
 import { CartEntity } from 'src/carts/entities/cart.entity';
-import { CategoryEntity } from 'src/categorys/entities/category.entity';
+import { CategoryEntity } from 'src/categories/entities/category.entity';
 import { BaseEntity } from 'src/core/entities/base.entity';
 import { MobileSystemEntity } from 'src/mobile-systems/entities/mobile-system.entity';
 import { OrderEntity } from 'src/orders/entities/order.entity';
+import { RatingEntity } from 'src/ratings/entities/rating.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -109,4 +110,7 @@ export class ProductEntity extends BaseEntity {
   @OneToOne(() => MobileSystemEntity, (mobileSystem) => mobileSystem.product)
   @JoinColumn({ name: 'mobileSystemId' })
   mobileSystem: MobileSystemEntity;
+
+  @OneToMany(() => RatingEntity, (rating) => rating.product)
+  products: ProductEntity[];
 }

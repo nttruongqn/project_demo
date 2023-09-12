@@ -43,8 +43,8 @@ export function PaymentCheckout({ user }: IPaymenCheckoutProps) {
 
                     <div className="px-2">
                         <div className="flex item-centers my-4 gap-1">
-                            <input type="radio" name="giaohangmd" value="" className="text-red-600 " />
-                            <label className="mb-0.5 text-md">Giao hàng tiêu chuẩn</label>
+                            <input type="radio" name="giaohangmd" value="" className="text-red-600" defaultChecked/>
+                            <label className="mb-0.5 text-md">Thanh toán khi nhận hàng</label>
                         </div>
                             <div className="flex flex-col gap-2">
                                 <div className="grid grid-cols-2 gap-2">

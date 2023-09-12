@@ -18,12 +18,16 @@ export class DesignInfoService {
   ) {}
 
   async create(data: DesignInfoDto): Promise<any> {
-    const [materialId, sizeId, weightId] = await Promise.all([
-      await this.materialService.create(data.materialName),
-      await this.sizeService.create(data.sizeName),
-      await this.weightService.create(data.weightName),
-    ]);
-    console.log(materialId, sizeId, weightId);
+    let materialId: string, sizeId: string, weightId: string;
+    if (data.materialName) {
+      materialId = await this.materialService.create(data.materialName);
+    }
+    if (data.sizeName) {
+      materialId = await this.materialService.create(data.materialName);
+    }
+    if (data.weightName) {
+      materialId = await this.materialService.create(data.materialName);
+    }
 
     const designInfoData = {
       designId: data.designId,
@@ -42,11 +46,18 @@ export class DesignInfoService {
 
     if (designInfo) {
       const { materialId, sizeId, weightId } = designInfo;
-      await Promise.all([
-        await this.materialService.delete(materialId),
-        await this.sizeService.delete(sizeId),
-        await this.weightService.delete(weightId),
-      ]);
+
+      if (materialId) {
+        await this.materialService.delete(materialId);
+      }
+
+      if (sizeId) {
+        await this.sizeService.delete(sizeId);
+      }
+
+      if (weightId) {
+        await this.weightService.delete(weightId);
+      }
     }
   }
 }

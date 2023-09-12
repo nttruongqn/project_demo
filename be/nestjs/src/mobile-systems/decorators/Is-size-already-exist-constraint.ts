@@ -14,7 +14,6 @@ export class IsSizeAlreadyExistConstraint
   constructor(private readonly sizeRepo: Repository<SizeEntity>) {}
 
   validate(name: any) {
-    console.log('a');
     return this.sizeRepo.findOneBy(name).then((size) => {
       if (size) return false;
       return true;

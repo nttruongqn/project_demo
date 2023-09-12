@@ -11,6 +11,9 @@ import { persistStore } from "redux-persist";
 import AuthProvider from "./store/AuthProvider";
 import { ShoppingCartProvider } from "./store/ShoppingCartProvider";
 import FormPaymentProvider from "./store/FormPaymentProvider";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import ButtonCategoryProvider from "./store/ButtonCategoryProvider";
 
 
 const persistor = persistStore(store);
@@ -35,19 +38,22 @@ const theme = createTheme({
 root.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <AuthProvider>
-        <ShoppingCartProvider>
-          <FormPaymentProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <BrowserRouter>
-              <CssBaseline>
-                <App />
-              </CssBaseline>
-            </BrowserRouter>
-          </PersistGate>
-          </FormPaymentProvider>
-        </ShoppingCartProvider>
-      </AuthProvider>
+      <ButtonCategoryProvider>
+        <AuthProvider>
+          <ShoppingCartProvider>
+            <FormPaymentProvider>
+              <PersistGate loading={null} persistor={persistor}>
+                <BrowserRouter>
+                  <CssBaseline>
+                    <ToastContainer />
+                    <App />
+                  </CssBaseline>
+                </BrowserRouter>
+              </PersistGate>
+            </FormPaymentProvider>
+          </ShoppingCartProvider>
+        </AuthProvider>
+      </ButtonCategoryProvider>
     </Provider>
   </ThemeProvider>
 );

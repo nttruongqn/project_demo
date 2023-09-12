@@ -21,4 +21,13 @@ export class BatteryTechnologyService {
   findAll() {
     return this.batteryTechnologyRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const advancedShooting = await this.batteryTechnologyRepo.save({ name });
+    return advancedShooting.id;
+  }
+
+  async delete(id: string) {
+    await this.batteryTechnologyRepo.delete(id);
+  }
 }

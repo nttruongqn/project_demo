@@ -10,7 +10,7 @@ import { UserService } from 'src/users/services/user.service';
 import { UserListDto } from '../dtos/user-list.dto';
 
 @ApiTags('User')
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(private userService: UserService) {}
   @ApiBearerAuth()

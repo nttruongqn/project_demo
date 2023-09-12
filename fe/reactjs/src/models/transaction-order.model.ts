@@ -9,6 +9,7 @@ export interface TransactionOrder {
     status: string;
     createdAt: string;
     updatedAt: string;
+    note: string;
     orders: Order[];
    
 }

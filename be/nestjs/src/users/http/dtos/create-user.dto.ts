@@ -17,4 +17,5 @@ export class CreateUserDto {
   password: string;
 
   roleId: string;
+  status: string;
 }

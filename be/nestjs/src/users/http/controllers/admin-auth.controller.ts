@@ -5,7 +5,7 @@ import { AuthService } from 'src/users/services/auth.service';
 import { UserLoginDto } from '../dtos/user-login.dto';
 
 @ApiTags('Admin auths')
-@Controller('admin-auths')
+@Controller('api/admin-auths')
 export class AdminAuthController {
   constructor(
     private authService: AuthService, // private jwtService: JwtService,

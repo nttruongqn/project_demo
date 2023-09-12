@@ -62,7 +62,7 @@ export function CartCheckoutMobile({ totalDefault, totalSale, totalPrice, quanti
             </div>
             <div className="px-2">
                 <div className="flex item-centers mb-4 gap-1">
-                    <input type="radio" name="giaohang" value="" className="text-red-600 " />
+                    <input type="radio" name="giaohang" value="" className="text-red-600" defaultChecked/>
                     <label className="mb-0.5 text-sm">Giao hàng tiêu chuẩn</label>
                 </div>
             </div>
@@ -73,7 +73,7 @@ export function CartCheckoutMobile({ totalDefault, totalSale, totalPrice, quanti
             </div>
             <div className="px-2">
                 <div className="flex item-centers mb-4 gap-1">
-                    <input type="radio" name="thanhtoan" value="" className="text-red-600 " />
+                    <input type="radio" name="thanhtoan" value="" className="text-red-600" defaultChecked/>
                     <label className="mb-0.5 text-sm">Thanh toán khi nhận hàng</label>
                 </div>
             </div>

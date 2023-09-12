@@ -7,7 +7,6 @@ import { productListActions } from "./productList.slice";
 
 function* fetchProductList(action: PayloadAction<ListParams>) {
   try {
-    console.log(action.payload.checkFilter)
     if(action.payload.checkFilter === true){
       yield put(productListActions.setListForUser());
     }
@@ -28,6 +27,10 @@ function* handleSearchDebounce(action: PayloadAction<ListParams>) {
 
 export default function* productListSaga() {
   yield takeLatest(productListActions.fetchProductList.type, fetchProductList)
+  // yield debounce(
+  //   1000,
+  //   productListActions.fetchProductList.type, fetchProductList
+  // )
   yield debounce(
     600,
     productListActions.setFilterWithDebounce.type,

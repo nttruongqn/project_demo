@@ -1,6 +1,8 @@
+import axios from "axios";
 import { LoginModel, RegisterModel } from "../models/auth.model";
 import { User } from "../models/user.model";
 import axiosClient from "./axiosClient";
+import { ResetPasswordModel } from "../models/forgot-password.model";
 
 const addBearerToken = (token: string) => {
   return {
@@ -27,6 +29,14 @@ const authApi = {
     const url = "/users/profile";
     return axiosClient.get(url, addBearerToken(token));
   },
+  sendEmailForgotPassword(email: string) {
+    const url = `/auths/email/forgot-password/${email}`;
+    return axiosClient.get(url);
+  },
+  resetPassword(data: ResetPasswordModel) {
+    const url = "/auths/email/reset-password";
+    return axiosClient.post(url, data);
+  }
 };
 
 export default authApi;

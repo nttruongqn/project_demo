@@ -15,7 +15,7 @@ export function ListPageHeader({
   showBtn
 }: ListPageHeaderProps) {
   return (
-    <div className="category__list-top flex  border-b justify-between w-full p-5 items-center h-[10%]">
+    <div className="flex border-b justify-between w-full p-5 items-center h-[10%]">
       <h1 className="font-bold text-2xl">{title}</h1>
       {showBtn && (<button className="p-2 bg-blue-600 text-white rounded-sm">
         <Link to={linkButton as string}>{btnContent}</Link>

@@ -6,7 +6,7 @@ import { authActions } from "../../../features/admin/auth/auth.slice";
 const sideBarMenu = [
   { name: "Tổng quan", hef: "/admin/dashboard", icon: "ri-bar-chart-fill" },
   { name: "Danh mục", hef: "/admin/categories", icon: "ri-list-check" },
-  { name: "Sản phẩm", hef: "/admin/products", icon: "ri-store-fill" },
+  { name: "Sản phẩm", hef: "/admin/products", icon: "ri-shopping-bag-3-fill" },
   { name: "Tài khoản", hef: "/admin/users", icon: "ri-team-fill" },
   { name: "Đơn hàng", hef: "/admin/transactions", icon: "ri-shopping-cart-fill" },
 

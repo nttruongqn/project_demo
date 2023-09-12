@@ -1,4 +1,5 @@
 import { Product } from "../models";
+import { CheckboxElements } from "../models/checkbox-elements.model";
 import { ListParams, ListResponse } from "../models/common";
 import { ProductPayload } from "../models/product-payload.model";
 import axiosClient from "./axiosClient";
@@ -7,6 +8,11 @@ export const productApi = {
   getAllPaginate(params: ListParams): Promise<ListResponse<Product>> {
     const url = "/products";
     return axiosClient.get(url, { params });
+  },
+  getElementsCheckBoxProduct(): Promise<CheckboxElements>{
+    const url = "/products/elements";
+    return axiosClient.get(url);
+
   },
   findById(id: string): Promise<Product> {
     const url = `/products/${id}`;

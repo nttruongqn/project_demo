@@ -6,6 +6,7 @@ export interface IHelmetProps {
 }
 
 export function Helmet({title, children}: IHelmetProps) {
+
     document.title = title;
     return (
        <>{children}</>

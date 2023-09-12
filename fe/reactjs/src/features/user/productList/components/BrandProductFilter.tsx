@@ -6,9 +6,10 @@ import { ListParams } from '../../../../models/common';
 export interface IBrandProductFilterProps {
     filter: ListParams;
     onChange?: (newFilter: ListParams) => void;
+    handleShowFilter: () => void;
 }
 
-export function BrandProductFilter({ filter, onChange}: IBrandProductFilterProps) {
+export function BrandProductFilter({ filter, onChange, handleShowFilter }: IBrandProductFilterProps) {
     const [brands, setBrands] = React.useState<Brand[]>()
 
     React.useEffect(() => {
@@ -23,8 +24,13 @@ export function BrandProductFilter({ filter, onChange}: IBrandProductFilterProps
         const newFilter = {
             ...filter,
             page: 1,
-            brandId
+            limit: 5,
+            brandId,
+            brandListIds: [],
+            priceListValues: [],
+            checkFilter: true
         }
+        handleShowFilter()
         onChange(newFilter)
     }
 
@@ -37,8 +43,6 @@ export function BrandProductFilter({ filter, onChange}: IBrandProductFilterProps
                     </div>
                 ))}
             </div>
-
         </>
-
     );
 }

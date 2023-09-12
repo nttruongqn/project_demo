@@ -27,7 +27,6 @@ export function UserTable({ userList, filter, onChange, onRemove }: IUserTablePr
     onRemove?.(user)
     setOpen(false);
   };
-  console.log('list user', userList)
 
   const handleSortType = (event: React.MouseEvent<HTMLElement>) => {
     if (!onChange) return;

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { ListParams } from '../../../../models/common';
+import { Product } from '../../../../models';
 
 export interface ITitleProductListFilterProps {
     titleName: string;
     filter: ListParams;
     onChange: (listParams: ListParams) => void;
+    productList: Product[];
 }
 
-export function TitleProductListFilter({ titleName, filter, onChange }: ITitleProductListFilterProps) {
+export function TitleProductListFilter({ titleName, filter, onChange, productList }: ITitleProductListFilterProps) {
     const [isBtnDefault, setIsBtnDefault] = React.useState<boolean>(true);
     const [isBtnSale, setIsBtnSale] = React.useState<boolean>(false);
     const [isBtnAsc, setIsBtnAsc] = React.useState<boolean>(false);
@@ -20,12 +22,27 @@ export function TitleProductListFilter({ titleName, filter, onChange }: ITitlePr
 
     const handleFilterProductDefault = () => {
         if (!onChange) return;
-        const newFilter: ListParams = {
-            page: 1,
-            limit: 5,
-            checkFilter: true
+        let newFilter: ListParams = {};
+        if(productList.length){
+            newFilter = {
+                ...filter,
+                page: 1,
+                limit: 5,
+                isSale: undefined,
+                sort: undefined,
+                order: undefined,
+                checkFilter: true
+            }
+        } else {
+            newFilter = {
+                page: 1,
+                limit: 5,
+                isSale: undefined,
+                sort: undefined,
+                order: undefined,
+                checkFilter: true
+            }
         }
-        console.log('v', newFilter);
         onChange?.(newFilter)
         setIsBtnDefault(true)
         setIsBtnSale(false)
@@ -35,7 +52,7 @@ export function TitleProductListFilter({ titleName, filter, onChange }: ITitlePr
 
     const handleFilterProductSale = () => {
         if (!onChange) return;
-        const newFilter: ListParams = { page: 1,
+        const newFilter: ListParams = { ...filter, page: 1,
             limit: 5, isSale: true, checkFilter: true
         }
         onChange?.(newFilter)
@@ -47,8 +64,7 @@ export function TitleProductListFilter({ titleName, filter, onChange }: ITitlePr
 
     const handleFilterProductAsc = () => {
         if (!onChange) return;
-        const newFilter: ListParams = { isSale: undefined, sort: 'price', order: 'ASC', page: 1, limit: 5, checkFilter: true }
-        console.log('v', newFilter);
+        const newFilter: ListParams = { ...filter, isSale: undefined, sort: 'price', order: 'ASC', page: 1, limit: 5, checkFilter: true }
 
         onChange?.(newFilter)
         setIsBtnAsc(true)
@@ -59,7 +75,7 @@ export function TitleProductListFilter({ titleName, filter, onChange }: ITitlePr
 
     const handleFilterProductDesc = () => {
         if (!onChange) return;
-        const newFilter: ListParams = { isSale: undefined, sort: 'price', order: 'DESC', page: 1, limit: 5,  checkFilter: true }
+        const newFilter: ListParams = { ...filter, isSale: undefined, sort: 'price', order: 'DESC', page: 1, limit: 5,  checkFilter: true }
         onChange?.(newFilter)
         setIsBtnDesc(true)
         setIsBtnAsc(false)

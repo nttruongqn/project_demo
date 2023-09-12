@@ -4,8 +4,8 @@ import { BrandEntity } from 'src/brands/entities/brand.entity';
 import { BrandService } from 'src/brands/services/brand.service';
 
 @ApiTags('Brand')
-@Controller('brands')
-export class BrandConroller {
+@Controller('api/brands')
+export class BrandController {
   constructor(private brandService: BrandService) {}
 
   @Get('all')

@@ -6,6 +6,7 @@ export interface User {
     username: string,
     accessToken: string,
     role?: Role,
+    status?: String;
     createdAt: string,
     updatedAt: string,
 }

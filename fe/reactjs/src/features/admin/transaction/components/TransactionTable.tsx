@@ -3,18 +3,17 @@ import { TransactionOrder } from '../../../../models/transaction-order.model';
 import { ListParams } from '../../../../models/common';
 import { formatCurrency, formatCurrencyReplace } from '../../../../core/formatCurrency';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
-import { Product } from '../../../../models';
-import { select } from 'redux-saga/effects';
 
 export interface ITransactionTableProps {
   transactionList: TransactionOrder[];
   filter: ListParams;
   onChange?: (newFilter: ListParams) => void;
   onRemove: (transaction: TransactionOrder) => void;
-  onChangeStatus: (transaction: TransactionOrder) => void;
+  onChangeStatusSuccess: (transaction: TransactionOrder) => void;
+  onChangeStatusCancellation: (transaction: TransactionOrder) => void;
 }
 
-export function TransactionTable({ transactionList, filter, onChange, onRemove, onChangeStatus }: ITransactionTableProps) {
+export function TransactionTable({ transactionList, filter, onChange, onRemove, onChangeStatusSuccess, onChangeStatusCancellation }: ITransactionTableProps) {
   const [open, setOpen] = React.useState(false);
   const [selectTransaction, setSelectTransaction] = React.useState<TransactionOrder>();
   const [isShowDelete, setIsShowDelete] = React.useState<Boolean>(false);
@@ -24,7 +23,7 @@ export function TransactionTable({ transactionList, filter, onChange, onRemove, 
 
 
   const titleDelete = "Xác nhận xoá giao dịch này ?";
-  const titleInfoOrder = "Chi tiết mã đơn hàng";
+  const titleInfoOrder = "Chi tiết mã đơn hàng của ";
 
   const handleClose = () => {
     setOpen(false);
@@ -65,11 +64,14 @@ export function TransactionTable({ transactionList, filter, onChange, onRemove, 
 
 
   const handleChangeStatusConfirm = (transaction: TransactionOrder) => {
-    onChangeStatus?.(transaction);
+    onChangeStatusSuccess?.(transaction);
     setOpen(false);
   };
 
-
+  const handleChangeStatusCancellation = (transaction: TransactionOrder) => {
+    onChangeStatusCancellation?.(transaction);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -223,7 +225,7 @@ export function TransactionTable({ transactionList, filter, onChange, onRemove, 
                           <span>Giá</span>
                         </div>
                       </th>
-                      <th className="w-[10%] border-b border-r p-3 text-start">
+                      <th className="w-[5%] border-b border-r p-3 text-start">
                         <div className="th__content w-full flex items-center gap-2">
                           <span>Số lượng</span>
                         </div>
@@ -265,18 +267,19 @@ export function TransactionTable({ transactionList, filter, onChange, onRemove, 
                     ))}
                   </tbody>
                 </table>
+                <span className='my-2 text-red-700 inline-block'>{`Note : `} </span>
+                <span className='ml-1'>{selectTransaction?.note}</span>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="error" variant="outlined" >Đóng</Button>
+              <Button onClick={handleClose} color="inherit" variant="outlined">Đóng</Button>
+              {selectTransaction?.status === INCOMPLETE && <Button onClick={() => handleChangeStatusCancellation(selectTransaction as TransactionOrder)} color="error" variant="outlined">Hủy đơn hàng</Button> }
               {selectTransaction?.status === INCOMPLETE && <Button onClick={() => handleChangeStatusConfirm(selectTransaction as TransactionOrder)} color="warning" variant="outlined" autoFocus>
                 Hoàn tất đơn hàng
               </Button>}
               {selectTransaction?.status === COMPLETE && <Button color="success" variant="contained" autoFocus>
                 Đã hoàn tất
               </Button>}
-
-
             </DialogActions>
           </>
         )

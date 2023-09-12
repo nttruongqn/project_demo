@@ -162,7 +162,7 @@ export interface BatteryTechnology {
 }
 
 export interface BatteryCapacity  {
-    name: string;
+    name: number;
 }
 
 export interface DesignInfo {

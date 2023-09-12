@@ -10,21 +10,21 @@ export interface MobileSystemPayload {
 }
     
 export interface Screen {
-    wideScreenId: string;
-    resolutionId: string;
+    wideScreenName: string;
+    resolutionName: string;
     technologyScreenId: string;
 }
     
 export interface RearCamera {
-    filmRearCameraId: string;
-    advancedShootingId: string;
-    resolutionRearCameraId: string;
+    filmRearCameraName: string;
+    advancedShootingName: string;
+    resolutionRearCameraName: string;
     isFlashLight: boolean;
 }
 
 export interface FrontCamera {
-    resolutionFrontCameraId: string;
-    videoCallId: string;
+    resolutionFrontCameraName: string;
+    videoCallName: string;
 }
 
 export interface OperationSystemCPUGPU {
@@ -52,7 +52,7 @@ export interface Connect {
 
 export interface Battery {
     batteryTypeId: string;
-    batteryTechnologyId: string; 
+    batteryTechnologyName: string; 
     batteryCapacityId: string;
 }
 

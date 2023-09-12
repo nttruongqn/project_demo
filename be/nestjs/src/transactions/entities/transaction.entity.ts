@@ -26,6 +26,9 @@ export class TransactionEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   fullName: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  payments: string;
+
   @ManyToOne(() => UserEntity)
   user: UserEntity;
 

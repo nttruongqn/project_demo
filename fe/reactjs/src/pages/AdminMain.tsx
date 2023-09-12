@@ -4,6 +4,7 @@ import { ProductFeature } from "../features/admin/product";
 import { CategoryFeature } from "../features/admin/category";
 import { UserFeature } from "../features/admin/user";
 import { TransactionFeature } from "../features/admin/transaction";
+import { DashboardFeature } from "../features/admin/dashboard";
 export interface MainProps {}
 
 export function AdminMain() {
@@ -11,7 +12,7 @@ export function AdminMain() {
     <>
     <div className="main h-full w-5/6 overflow-y-auto">
         <Routes>
-          {/* <Route path="dashboard" element={<Dashboard />}></Route> */}
+          <Route path="dashboard" element={<DashboardFeature />}></Route>
           <Route path="categories/*" element={<CategoryFeature />}></Route>
           <Route path="products/*" element={<ProductFeature />}></Route>
           <Route path="users/*" element={<UserFeature />}></Route>

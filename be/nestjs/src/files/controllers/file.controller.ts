@@ -19,7 +19,7 @@ import { FileService } from '../services/file.service';
 import { FolderEnum } from '../enums/folder.enum';
 
 @ApiTags('File')
-@Controller('files')
+@Controller('api/files')
 export class FileController {
   constructor(private fileService: FileService) {}
 

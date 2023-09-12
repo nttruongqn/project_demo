@@ -1,0 +1,21 @@
+<p style="font-weight: bold;">Chúc mừng bạn đã thanh toán thành công</p>
+<p style="font-weight: bold;">Mã đơn hàng #{{ id }}</p>
+<p>=======================================</p>
+<p style="font-weight: bold;">Thông tin khách hàng</p>
+<p>=======================================</p>
+<p>Họ tên khách hàng: {{ fullName }}</p>
+<p>Số điện thoại: {{ phone }}</p>
+<p>Địa chỉ: {{ address }}</p>
+<p >=======================================</p>
+<p style="font-weight: bold;">Danh sách đơn hàng</p>
+<p >=======================================</p>
+{{#each orders}}
+    <p>Tên sản phẩm: {{this.product.name}}</p>
+    <p>Số lượng: {{this.quantity}}</p>
+    <p>Tổng tiền: {{this.price}} VND</p>
+    <p >=======================================</p>
+{{/each}}
+<p><span style="font-weight: bold;">Tổng tiền tất cả đơn hàng:</span> <span>{{ amount }} VND</span></p>
+<p><span style="font-weight: bold;">Hình thức:</span> Thanh toán khi nhận hàng</p>
+<p>=======================================</p>
+<p>Mọi chi tiết thắc mắc, vui lòng liên hệ admin: <span style="font-weight: bold; color:red;">nttruongqn@gmail.com</span></p>

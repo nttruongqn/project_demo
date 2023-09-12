@@ -5,7 +5,7 @@ import { PlaceOrderDto } from '../dtos/place-order.dto';
 import { OrderEntity } from 'src/orders/entities/order.entity';
 
 @ApiTags('Order')
-@Controller('orders')
+@Controller('api/orders')
 export class OrderController {
   constructor(private orderService: OrderService) {}
 

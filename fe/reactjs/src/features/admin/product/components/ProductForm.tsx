@@ -33,14 +33,14 @@ const schema = yup.object({
   price: yup.number().required("Vui lòng nhập giá tiền"),
   brandId: yup.string().required("Vui lòng chọn nhãn"),
   categoryId: yup.string().required("Vui lòng chọn danh mục"),
-  wideScreenId: yup.string().required("Vui lòng chọn độ rộng"),
-  resolutionId: yup.string().required("Vui lòng chọn độ phân giải"),
+  // wideScreenName: yup.string().required("Vui lòng nhập độ rộng"),
+  // resolutionName: yup.string().required("Vui lòng nhập độ phân giải"),
   technologyScreenId: yup.string().required("Vui lòng chọn công nghệ màn hình"),
-  filmRearCameraId: yup.string().required("Vui lòng chọn quay film camera sau"),
-  advancedShootingId: yup.string().required("Vui lòng chọn chụp nâng cao camera sau"),
-  resolutionRearCameraId: yup.string().required("Vui lòng chọn độ phân giải camera sau"),
-  resolutionFrontCameraId: yup.string().required("Vui lòng nhập độ phân giải camera trước"),
-  videoCallId: yup.string().required("Vui lòng chọn video call camera trước"),
+  // filmRearCameraName: yup.string().required("Vui lòng nhập quay film camera sau"),
+  // advancedShootingName: yup.string().required("Vui lòng nhập chụp nâng cao camera sau"),
+  // resolutionRearCameraName: yup.string().required("Vui lòng nhập độ phân giải camera sau"),
+  // resolutionFrontCameraName: yup.string().required("Vui lòng nhập độ phân giải camera trước"),
+  // videoCallName: yup.string().required("Vui lòng chọn video call camera trước"),
   operationSystemId: yup.string().required("Vui lòng chọn hệ điều hành"),
   cpuId: yup.string().required("Vui lòng chọn cpu"),
   gpuId: yup.string().required("Vui lòng chọn gpu"),
@@ -56,12 +56,12 @@ const schema = yup.object({
   gpsId: yup.string().required("Vui lòng chọn nhãn"),
   otherConnectId: yup.string().required("Vui lòng chọn kết nối khác"),
   batteryTypeId: yup.string().required("Vui lòng chọn loại pin"),
-  batteryTechnologyId: yup.string().required("Vui lòng chọn công nghệ pin"),
+  // batteryTechnologyName: yup.string().required("Vui lòng nhập công nghệ pin"),
   batteryCapacityId: yup.string().required("Vui lòng chọn dung lượng pin"),
   designId: yup.string().required("Vui lòng chọn thiết kế"),
-  weightName: yup.string().required("Vui lòng nhập trọng lượng"),
-  sizeName: yup.string().required("Vui lòng nhập kích thước"),
-  materialName: yup.string().required("Vui lòng nhập nguyên liệu"),
+  // weightName: yup.string().required("Vui lòng nhập trọng lượng"),
+  // sizeName: yup.string().required("Vui lòng nhập kích thước"),
+  // materialName: yup.string().required("Vui lòng nhập nguyên liệu"),
 }).required();
 
 export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
@@ -75,14 +75,14 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
   });
   const [imagePreview, setImagePreview] = React.useState<any>();
   const [brandList, setBrandList] = React.useState<DataOptions[]>([]);
-  const [resolutionList, setResolutionList] = React.useState<ResolutionList[]>([]);
-  const [wideScreenList, setWideScreenList] = React.useState<WideScreenList[]>([]);
+  // const [resolutionList, setResolutionList] = React.useState<ResolutionList[]>([]);
+  // const [wideScreenList, setWideScreenList] = React.useState<WideScreenList[]>([]);
   const [technologyScreenList, setTechnologyScreenList] = React.useState<TechnologyScreenList[]>([]);
-  const [advancedShootingList, setAdvancedShootingList] = React.useState<AdvancedShootingList[]>([]);
-  const [filmRearCameraList, setFilmRearCameraList] = React.useState<FilmRearCameraList[]>([]);
-  const [resolutionRearCameraList, setResolutionRearCameraList] = React.useState<ResolutionRearCameraList[]>([]);
-  const [resolutionFrontCameraList, setResolutionFrontCameraList] = React.useState<ResolutionFrontCameraList[]>([]);
-  const [videoCallList, setVideoCallList] = React.useState<VideoCallList[]>([]);
+  // const [advancedShootingList, setAdvancedShootingList] = React.useState<AdvancedShootingList[]>([]);
+  // const [filmRearCameraList, setFilmRearCameraList] = React.useState<FilmRearCameraList[]>([]);
+  // const [resolutionRearCameraList, setResolutionRearCameraList] = React.useState<ResolutionRearCameraList[]>([]);
+  // const [resolutionFrontCameraList, setResolutionFrontCameraList] = React.useState<ResolutionFrontCameraList[]>([]);
+  // const [videoCallList, setVideoCallList] = React.useState<VideoCallList[]>([]);
   const [operationSystemList, setOperationSystemList] = React.useState<OperationSystemList[]>([]);
   const [gpuList, setGpuList] = React.useState<GPUList[]>([]);
   const [cpuList, setCpuList] = React.useState<CPUList[]>([]);
@@ -98,7 +98,7 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
   const [otherConnectList, setOtherConnectList] = React.useState<OtherConnectList[]>([]);
   const [batteryTypeList, setBatteryTypeList] = React.useState<BatteryTypeList[]>([]);
   const [batteryCapacityList, setBatteryCapacityList] = React.useState<BatteryCapacityList[]>([]);
-  const [batteryTechnologyList, setBatteryTechnologyList] = React.useState<BatteryTechnologyList[]>([]);
+  // const [batteryTechnologyList, setBatteryTechnologyList] = React.useState<BatteryTechnologyList[]>([]);
   const [designList, setDesignList] = React.useState<DesignList[]>([]);
   const categoryOptions = useAppSelector(selectCategoryOptions);
   const editor = React.useRef(null);
@@ -128,14 +128,14 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
   React.useEffect(() => {
     (async () => {
       const data = await mobileSystemApi.getChildElements();
-      setResolutionList(data.resolutionList)
-      setWideScreenList(data.wideScreenList)
+      // setResolutionList(data.resolutionList)
+      // setWideScreenList(data.wideScreenList)
       setTechnologyScreenList(data.technologyScreenList)
-      setAdvancedShootingList(data.advancedShootingList)
-      setFilmRearCameraList(data.filmRearCameraList)
-      setResolutionRearCameraList(data.resolutionRearCameraList)
-      setResolutionFrontCameraList(data.resolutionFrontCameraList)
-      setVideoCallList(data.videoCallList)
+      // setAdvancedShootingList(data.advancedShootingList)
+      // setFilmRearCameraList(data.filmRearCameraList)
+      // setResolutionRearCameraList(data.resolutionRearCameraList)
+      // setResolutionFrontCameraList(data.resolutionFrontCameraList)
+      // setVideoCallList(data.videoCallList)
       setOperationSystemList(data.operationSystemList)
       setGpuList(data.gpuList)
       setCpuList(data.cpuList)
@@ -151,7 +151,7 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
       setOtherConnectList(data.otherConnectList)
       setBatteryTypeList(data.batteryTypeList)
       setBatteryCapacityList(data.batteryCapacityList)
-      setBatteryTechnologyList(data.batteryTechnologyList)
+      // setBatteryTechnologyList(data.batteryTechnologyList)
       setDesignList(data.designList)
     })()
   }, [])
@@ -245,21 +245,11 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="resolutionId"
-                  control={control}
-                  label="Độ phân giải"
-                  options={resolutionList}
-                />
+                <InputField name="wideScreenName" control={control} label="Độ rộng màn hình" />
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="wideScreenId"
-                  control={control}
-                  label="Màn hình rộng"
-                  options={wideScreenList}
-                />
+                <InputField name="resolutionName" control={control} label="Độ phân giải" />
               </Grid>
             </Grid>
           </Box>
@@ -267,32 +257,18 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
           <Box>
             <Typography fontWeight={700}>Camera sau</Typography>
             <Grid container spacing={1}>
-              <Grid item xs={3}>
-                <SelectGroupField
-                  name="advancedShootingId"
-                  control={control}
-                  label="Chụp nâng cao"
-                  options={advancedShootingList}
-                />
+            <Grid item xs={3}>
+                <InputField name="advancedShootingName" control={control} label="Chụp nâng cao" />
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="filmRearCameraId"
-                  control={control}
-                  label="Quay phim"
-                  options={filmRearCameraList}
-                />
+                <InputField name="filmRearCameraName" control={control} label="Quay phim"/>
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="resolutionRearCameraId"
-                  control={control}
-                  label="Độ phân giải"
-                  options={resolutionRearCameraList}
-                />
+                <InputField name="resolutionRearCameraName" control={control} label="Độ phân giải" />
               </Grid>
+
               <Grid item xs={3}>
                 <CheckboxTrueFalse
                   name="isFlashLight"
@@ -306,24 +282,13 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
           <Box>
             <Typography fontWeight={700}>Camera Trước</Typography>
             <Grid container spacing={1}>
-              <Grid item xs={3}>
-                <SelectGroupField
-                  name="resolutionFrontCameraId"
-                  control={control}
-                  label="Độ phân giải"
-                  options={resolutionFrontCameraList}
-                />
+            <Grid item xs={3}>
+                <InputField name="resolutionFrontCameraName" control={control} label="Độ phân giải"/>
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="videoCallId"
-                  control={control}
-                  label="Video Call"
-                  options={videoCallList}
-                />
+                <InputField name="videoCallName" control={control} label="Video call"/>
               </Grid>
-
             </Grid>
           </Box>
 
@@ -481,12 +446,7 @@ export function ProductForm({ initialValues, onSubmit }: ProductFormProps) {
               </Grid>
 
               <Grid item xs={3}>
-                <SelectGroupField
-                  name="batteryTechnologyId"
-                  control={control}
-                  label="Công nghệ pin"
-                  options={batteryTechnologyList}
-                />
+                <InputField name="batteryTechnologyName" control={control} label="Công nghệ pin"/>
               </Grid>
             </Grid>
           </Box>

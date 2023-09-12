@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ListParams } from '../../../../models/common';
-import { Status } from '../../../../models/status.model';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 export interface ITransactionFilterProps {
@@ -11,7 +10,7 @@ export interface ITransactionFilterProps {
 
 export function TransactionFilter({ filter, onChange, onSearchChange }: ITransactionFilterProps) {
   const [status, setStatus] = React.useState('')
-  const statusList = ['Chưa xử lý', 'Đã xử lý']
+  const statusList = ['Chưa xử lý', 'Đã xử lý', 'Đã hủy bỏ']
 
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +31,7 @@ export function TransactionFilter({ filter, onChange, onSearchChange }: ITransac
     const newFilter = {
       ...filter,
       page: 1,
-      roleType: e.target.value || undefined
+      transactionStatusType: e.target.value || undefined
     };
     onChange(newFilter);
   }

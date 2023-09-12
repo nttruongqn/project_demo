@@ -1,4 +1,4 @@
-import { BrandsModule } from './brands/brand.module';
+import { BrandModule } from './brands/brand.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,15 +14,16 @@ import { TransactionModule } from './transactions/transaction.module';
 import { ArticleModule } from './articles/article.module';
 import { RatingModule } from './ratings/rating.module';
 import { ContactModule } from './contacts/contact.module';
-import { CategoryModule } from './categorys/category.module';
+import { CategoryModule } from './categories/category.module';
 import { MobileSystemModule } from './mobile-systems/mobile-system.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { DashboardModule } from './dashboards/dashboard.module';
 
 @Module({
   imports: [
-    BrandsModule,
+    BrandModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(AppDataSource.options),
     MailerModule.forRootAsync({
@@ -61,6 +62,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     RatingModule,
     ContactModule,
     MobileSystemModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

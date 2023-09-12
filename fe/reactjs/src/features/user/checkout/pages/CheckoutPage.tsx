@@ -3,12 +3,14 @@ import { CartCheckoutMobile } from '../components/CartCheckoutMobile';
 import { CartCheckout } from '../components/CartCheckout';
 import { PaymentCheckout } from '../components/PaymentCheckout';
 import { TotalCheckout } from '../components/TotalCheckout';
-import { useAuth, useShoppingCart } from '../../../../store/hooks';
+import { useAuth, useButtonCategory, useShoppingCart } from '../../../../store/hooks';
 import { TransactionModel } from '../../../../models/transaction.model';
 import { orderApi } from '../../../../api/orderApi';
 import { CartItemModel } from '../../../../models/cartItem.model';
 import { CheckoutBreadCrumb } from '../components/BreadCrumbCheckout';
 import { Helmet } from '../../../../components/Helmet/Helmet';
+import { CheckboxElements } from '../../../../models/checkbox-elements.model';
+import { Category } from '../../home/components/Category';
 
 export interface ICheckoutProps {
 }
@@ -17,7 +19,12 @@ export function CheckoutPage(props: ICheckoutProps) {
     const { user } = useAuth();
     const { totalDefault, totalSale, cartQuantity, cartItems, increaseCartQuantity, decreaseCartQuantity, totalPrice, removeFromCart } = useShoppingCart();
     const [isShowOrderInformation, setIsShowOrderInformation] = React.useState(false);
-   
+    const { isShowCategory, checkboxElements, phoneListFilterPrice, resetButton } = useButtonCategory();
+
+    React.useEffect(() => {
+        resetButton()
+    }, [])
+
 
 const showOrderInformation = () => {
     setIsShowOrderInformation(true);
@@ -54,6 +61,7 @@ const handleOrder = async (formValues: TransactionModel) => {
 return (
     <>
     <Helmet title='Trang thanh toán'>
+    {checkboxElements && isShowCategory &&<Category data={checkboxElements as CheckboxElements} phoneListFilterPrice={phoneListFilterPrice} />}
         <main className="min-h-[600px] md:min-h-[820px] md:bg-slate-100 max-md:bg-white">
             <div className="container">
                 <div className="max-md:px-2 md:py-2">

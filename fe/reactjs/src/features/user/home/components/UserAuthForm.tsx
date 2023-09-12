@@ -11,16 +11,17 @@ export interface IUserAuthFormProps {
     initialValues: LoginModel | RegisterModel;
     onLoginSubmit?: (formValues: LoginModel) => void;
     handleShowRegister: () => void;
+    handleShowForgotPassword: () => void;
 }
 
 const schema = yup.object({
     email: yup.string().email("Email không đúng định dạng").required("Vui lòng nhập email"),
-    password: yup.string().required("Vui lòng nhập mật khẩU").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự'),
-    // repassword: yup.string().required("Vui lòng nhập lại mật khẩU").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự').oneOf([yup.ref("password")], 'Mật khẩu không khớp'),
+    password: yup.string().required("Vui lòng nhập mật khẩu").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự'),
+    // repassword: yup.string().required("Vui lòng nhập lại mật khẩu").min(4, 'Mật khẩu tối thiểu 4 kí tự').max(12, 'Mật khẩu tối đa 12 kí tự').oneOf([yup.ref("password")], 'Mật khẩu không khớp'),
     // username: yup.string().required("Vui lòng nhập tên tài khoản"),
 }).required();
 
-export function UserAuthForm({ initialValues, onLoginSubmit, handleShowRegister }: IUserAuthFormProps) {
+export function UserAuthForm({ initialValues, onLoginSubmit, handleShowRegister, handleShowForgotPassword }: IUserAuthFormProps) {
     const { control, handleSubmit, formState: { isSubmitting } } = useForm<LoginModel>({ defaultValues: initialValues, resolver: yupResolver(schema) });
 
     const handleLoginFormSubmit = async (formValues: LoginModel) => {
@@ -38,7 +39,8 @@ export function UserAuthForm({ initialValues, onLoginSubmit, handleShowRegister 
             <form onSubmit={handleSubmit(handleLoginFormSubmit)} className='flex flex-col gap-2'>
                 <CustomInputField name="email" control={control} label="email" placeholder='Nhập email' />
                 <PasswordInputField name="password" control={control} label="pass" placeholder='Nhập mật khẩu' />
-                <p className='my-2'>Chưa có tài khoản? <span className='text-red-700 cursor-pointer' onClick={handleShowRegister}>Đăng ký</span></p>
+                <p className='mt-1'>Chưa có tài khoản? <span className='text-red-700 cursor-pointer' onClick={handleShowRegister}>Đăng ký</span></p>
+                <p className='mb-1'><span className='text-red-700 cursor-pointer' onClick={handleShowForgotPassword}>Quên mật khẩu</span></p>
                 <Button
                     size='medium'
                     type="submit"

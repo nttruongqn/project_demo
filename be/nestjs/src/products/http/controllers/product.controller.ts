@@ -21,10 +21,14 @@ import { ProductService } from 'src/products/services/product.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Product')
-@Controller('products')
+@Controller('api/products')
 export class ProductController {
   constructor(private productService: ProductService) {}
   @Get()
+  @ApiOperation({
+    summary: 'Get list products paginate',
+    description: 'Get list products paginate',
+  })
   @ApiPaginatedResponse({
     model: ProductEntity,
     description: 'List of Product',
@@ -35,7 +39,20 @@ export class ProductController {
     return this.productService.paginate(query);
   }
 
+  @Get('elements')
+  @ApiOperation({
+    summary: 'Get elements for checkbox product',
+    description: 'Get elements for checkbox product',
+  })
+  async getElementsCheckBoxProduct() {
+    return this.productService.getElementsCheckBoxProduct();
+  }
+
   @Get(':id')
+  @ApiOperation({
+    summary: 'Get product by id',
+    description: 'Get product by id',
+  })
   @ApiParam({
     name: 'id',
     description: 'Id of Product',
@@ -46,16 +63,16 @@ export class ProductController {
 
   @Get(':id/category/:categoryId')
   @ApiOperation({
-    summary: 'Get Related Products',
-    description: 'Get Related Products',
+    summary: 'Get related products',
+    description: 'Get related products',
   })
   @ApiParam({
     name: 'id',
-    description: 'Id of Product',
+    description: 'Id of product',
   })
   @ApiParam({
     name: 'categoryId',
-    description: 'Id of Category',
+    description: 'Id of category',
   })
   async getRelatedProducts(
     @Param('id') id: string,

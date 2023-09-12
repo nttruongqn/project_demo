@@ -21,4 +21,13 @@ export class FilmRearCameraService {
   findAll() {
     return this.filmRearCameraRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const filmRearCamera = await this.filmRearCameraRepo.save({ name });
+    return filmRearCamera.id;
+  }
+
+  async delete(id: string) {
+    await this.filmRearCameraRepo.delete(id);
+  }
 }

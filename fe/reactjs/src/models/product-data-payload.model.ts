@@ -24,14 +24,14 @@ export interface ProductDataPayload {
     sale?: number;
     createdAt?: string;
     updatedAt?: string;
-    wideScreenId: string;
-    resolutionId: string;
+    wideScreenName?: string;
+    resolutionName?: string;
     technologyScreenId: string;
-    filmRearCameraId: string;
-    advancedShootingId: string;
-    resolutionRearCameraId: string;
-    resolutionFrontCameraId: string;
-    videoCallId: string;
+    filmRearCameraName?: string;
+    advancedShootingName?: string;
+    resolutionRearCameraName?: string;
+    resolutionFrontCameraName?: string;
+    videoCallName?: string;
     operationSystemId: string;
     cpuId: string;
     gpuId: string;
@@ -47,12 +47,12 @@ export interface ProductDataPayload {
     gpsId: string;
     otherConnectId: string;
     batteryTypeId: string;
-    batteryTechnologyId: string; 
+    batteryTechnologyName?: string; 
     batteryCapacityId: string;
     designId: string;
-    weightName: string;
-    sizeName: string; 
-    materialName: string;
+    weightName?: string;
+    sizeName?: string; 
+    materialName?: string;
     isFlashLight?: boolean;
 }
 

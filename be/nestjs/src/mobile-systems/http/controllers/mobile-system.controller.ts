@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MobileSystemService } from 'src/mobile-systems/services/mobile-system.service';
 
 @ApiTags('MobileSystem')
-@Controller('mobile-systems')
+@Controller('api/mobile-systems')
 export class MobileSystemController {
   constructor(private mobileSystemService: MobileSystemService) {}
 

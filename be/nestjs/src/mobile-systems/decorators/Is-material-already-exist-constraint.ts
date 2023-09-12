@@ -15,7 +15,6 @@ export class IsMaterialAlreadyExistConstraint
   }
 
   validate(name: any) {
-    console.log('hero');
     return this.materialService.findByName(name).then((material) => {
       if (material) return false;
       return true;
@@ -25,7 +24,6 @@ export class IsMaterialAlreadyExistConstraint
 
 export function IsMaterialAlreadyExist(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
-    console.log('vaO', validationOptions);
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

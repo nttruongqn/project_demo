@@ -49,13 +49,23 @@ export function ListPage(props: IListPageProps) {
         }
     }
 
-    const handleChangeStatusTransaction = async (transaction: TransactionOrder) => {
+    const handleChangeStatusTransactionSuccess = async (transaction: TransactionOrder) => {
         try {
-            await transactionApi.changeStatusTransaction(transaction.id)
+            await transactionApi.changeStatusTransactionSuccess(transaction.id)
             const newFilter = {...filter}
             dispatch(transactionActions.setFilter(newFilter))
         } catch (error) {
-            console.log("Change status failed")
+            console.log("Change status success failed")
+        }
+    }
+
+    const handleChangeStatusTransactionCancellation = async (transaction: TransactionOrder) => {
+        try {
+            await transactionApi.changeStatusTransactionCancellation(transaction.id)
+            const newFilter = {...filter}
+            dispatch(transactionActions.setFilter(newFilter))
+        } catch (error) {
+            console.log("Change status cancellation failed")
         }
     }
 
@@ -69,7 +79,7 @@ export function ListPage(props: IListPageProps) {
                 <div className="w-full p-5 h-[90%]">
                     <div className="shadow-md p-3 z-10">
                         <TransactionFilter filter={filter} onSearchChange={handleSearchChange} onChange={handleFilterChange} />
-                        <TransactionTable filter={filter} onChange={handleFilterChange} transactionList={transactionList} onRemove={handleRemoveTransaction} onChangeStatus={handleChangeStatusTransaction} />
+                        <TransactionTable filter={filter} onChange={handleFilterChange} transactionList={transactionList} onRemove={handleRemoveTransaction} onChangeStatusSuccess={handleChangeStatusTransactionSuccess} onChangeStatusCancellation={handleChangeStatusTransactionCancellation} />
                         <Box mt={2} display="flex" justifyContent="flex-end">
                             <Pagination
                                 count={pagination.totalPages}

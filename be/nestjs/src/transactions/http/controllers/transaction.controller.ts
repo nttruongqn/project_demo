@@ -7,7 +7,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { ApiPaginatedResponse } from 'src/core/repositories/api-pagination.response';
 
 @ApiTags('Transaction')
-@Controller('transactions')
+@Controller('api/transactions')
 export class TransactionController {
   constructor(private transactionService: TransactionService) {}
 
@@ -26,23 +26,36 @@ export class TransactionController {
     return this.transactionService.paginate(query);
   }
 
-  @Put(':id/status')
+  @Put(':id/status/success')
   @ApiOperation({
-    summary: 'Change status transaction',
-    description: 'Change status transaction',
+    summary: 'Change status transaction success',
+    description: 'Change status transaction success',
   })
   @ApiParam({
     name: 'id',
     description: 'Id of Transaction',
   })
-  changeStatusTransaction(@Param('id') id: string) {
-    this.transactionService.changeStatusTransaction(id);
+  changeTransactionSuccessStatus(@Param('id') id: string) {
+    this.transactionService.changeTransactionSuccessStatus(id);
+  }
+
+  @Put(':id/status/cancellation')
+  @ApiOperation({
+    summary: 'Change status transaction cancellation',
+    description: 'Change status transaction cancellation',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id of Transaction',
+  })
+  changeTransactionCancellationStatus(@Param('id') id: string) {
+    this.transactionService.changeTransactionCancellationStatus(id);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: 'Revoke transactions',
-    description: 'Revole transactions',
+    description: 'Revoke transactions',
   })
   @ApiParam({
     name: 'id',

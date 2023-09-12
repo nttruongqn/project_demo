@@ -4,8 +4,8 @@ import { BaseEntity } from 'src/core/entities/base.entity';
 
 @Entity('BatteryCapacity')
 export class BatteryCapacityEntity extends BaseEntity {
-  @Column({ type: 'varchar' })
-  name: string;
+  @Column({ type: 'int' })
+  name: number;
 
   @OneToMany(() => BatteryEntity, (battery) => battery.batteryCapacity)
   batterys: BatteryEntity[];

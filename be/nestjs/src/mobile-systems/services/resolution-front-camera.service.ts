@@ -21,4 +21,15 @@ export class ResolutionFrontCameraService {
   findAll() {
     return this.resolutionFrontCameraRepo.find();
   }
+
+  async create(name: string): Promise<string> {
+    const resolutionFrontCamera = await this.resolutionFrontCameraRepo.save({
+      name,
+    });
+    return resolutionFrontCamera.id;
+  }
+
+  async delete(id: string) {
+    await this.resolutionFrontCameraRepo.delete(id);
+  }
 }
